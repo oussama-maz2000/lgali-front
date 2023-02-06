@@ -1,15 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:get/get.dart';
 import 'package:lgali/utils/global.color.dart';
 
 class CustomButton extends StatelessWidget {
-  const CustomButton({super.key});
+  final String text;
+  final TextEditingController? emailController;
+  final TextEditingController passwordController;
+  final TextEditingController? userNameController;
 
+  CustomButton(this.text, this.emailController, this.passwordController,
+      this.userNameController);
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => print('loged'),
+      onTap: () => {
+        if (emailController!.text.length < 4)
+          {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text('entre some text'),
+              duration: Duration(seconds: 3),
+              backgroundColor: Colors.red[300],
+              width: double.infinity,
+            ))
+          }
+      },
       child: Container(
         alignment: Alignment.center,
         height: 55,
@@ -23,7 +39,7 @@ class CustomButton extends StatelessWidget {
               )
             ]),
         child: Text(
-          'Log in',
+          '$text',
           style: TextStyle(
               color: Colors.white, fontWeight: FontWeight.w600, fontSize: 20),
         ),

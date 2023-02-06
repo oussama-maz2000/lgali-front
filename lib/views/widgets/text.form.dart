@@ -7,12 +7,14 @@ class TextForm extends StatelessWidget {
   final String text;
   final TextInputType textInputType;
   final bool obscure;
-
-  TextForm(
-      {required this.controller,
-      required this.text,
-      required this.textInputType,
-      required this.obscure});
+  final Function? checkString;
+  TextForm({
+    required this.controller,
+    required this.text,
+    required this.textInputType,
+    required this.obscure,
+    this.checkString,
+  });
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,6 +27,9 @@ class TextForm extends StatelessWidget {
             BoxShadow(color: Colors.black.withOpacity(0.15), blurRadius: 7)
           ]),
       child: TextFormField(
+        validator: (value) {
+          checkString!(value);
+        },
         controller: controller,
         keyboardType: textInputType,
         obscureText: obscure,

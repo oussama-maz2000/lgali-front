@@ -1,3 +1,4 @@
+import 'package:lgali/views/sign.view.dart';
 import 'package:lgali/views/widgets/social.login.dart';
 
 import './widgets/text.form.dart';
@@ -7,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:lgali/utils/global.color.dart';
 
 import './widgets/button.form.dart';
+
+import 'package:get/route_manager.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -42,10 +45,10 @@ class _LoginViewState extends State<LoginView> {
               ),
             ),
             SizedBox(height: 50),
-            Text('log in to your account :',
+            Text('Log in to your account :',
                 style: TextStyle(
                     color: GlobalColor.textColor,
-                    fontSize: 20,
+                    fontSize: 25,
                     fontWeight: FontWeight.w500)),
             SizedBox(height: 25),
             // Email Input
@@ -64,7 +67,7 @@ class _LoginViewState extends State<LoginView> {
               obscure: true,
             ),
             SizedBox(height: 20),
-            CustomButton(),
+            CustomButton('Log In', emailController, passwordController, null),
             SizedBox(height: 40),
             SocialLogin(),
           ]),
@@ -82,7 +85,7 @@ class _LoginViewState extends State<LoginView> {
           ),
           InkWell(
             onTap: () {
-              print('click Sign up');
+              Get.to(SignView());
             },
             child: Text(
               ' Sign Up',
