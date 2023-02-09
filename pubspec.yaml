@@ -85,6 +85,10 @@ flutter:
       fonts:
         - asset: assets/fonts/brandon-grotesque-bold-italic-58a8a48221563.otf
           weight: 800
+    - family: Nunito
+      fonts:
+        - asset: assets/fonts/Nunito-Regular.ttf
+          weight: 800
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro
