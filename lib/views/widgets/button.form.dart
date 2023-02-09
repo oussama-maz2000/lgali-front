@@ -10,21 +10,23 @@ class CustomButton extends StatelessWidget {
   final TextEditingController passwordController;
   final TextEditingController? userNameController;
 
+  showError(context, message) {
+    return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(message),
+      duration: Duration(seconds: 3),
+      backgroundColor: Colors.red[300],
+    ));
+  }
+
   CustomButton(this.text, this.emailController, this.passwordController,
       this.userNameController);
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () => {
-        if (emailController!.text.length < 4)
-          {
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text('entre some text'),
-              duration: Duration(seconds: 3),
-              backgroundColor: Colors.red[300],
-              width: double.infinity,
-            ))
-          }
+        if (emailController!.text.length < 4 &&
+            !emailController!.text.contains('@'))
+          {showError(context, 'email not valid')}
       },
       child: Container(
         alignment: Alignment.center,
