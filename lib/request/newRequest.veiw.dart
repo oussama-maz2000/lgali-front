@@ -169,9 +169,7 @@ class NewRequestView extends GetView<RequestController> {
                         backgroundColor: Colors.green[300]),
                     child: Text(
                       "Done",
-                      style: TextStyle(
-                          fontSize: 20,
-                          color: Color.fromARGB(255, 225, 221, 221)),
+                      style: TextStyle(fontSize: 20, color: Colors.white),
                     ),
                     onPressed: () {},
                   )),

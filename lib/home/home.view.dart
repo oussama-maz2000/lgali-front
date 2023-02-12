@@ -19,7 +19,7 @@ class HomeScreen extends GetView<HomeController> {
           elevation: 0,
           actions: [
             Container(
-                margin: EdgeInsets.only(right: 7),
+                margin: EdgeInsets.only(right: 15),
                 child: IconButton(
                   icon: Icon(
                     Icons.account_circle_rounded,

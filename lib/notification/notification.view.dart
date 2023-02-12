@@ -33,8 +33,8 @@ class NotificationScreen extends GetView<NotificationController> {
                       Get.to(RequestView());
                     },
                     child: Icon(
-                      Icons.new_label,
-                      size: 37,
+                      Icons.send_rounded,
+                      size: 30,
                       color: GlobalColor.mainColor,
                     ),
                   ),

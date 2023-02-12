@@ -49,6 +49,7 @@ class ProfilView extends GetView<ProfilController> {
                               SizedBox(
                                 height: 35,
                                 child: TextField(
+                                    controller: controller.nameController,
                                     decoration: InputDecoration(
                                         labelText: "name",
                                         border: OutlineInputBorder())),
@@ -63,16 +64,21 @@ class ProfilView extends GetView<ProfilController> {
                                     style: TextStyle(
                                         fontSize: 14, color: Colors.white),
                                   ),
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    controller.person.value.setName(
+                                        controller.nameController.value.text);
+                                    print(controller.nameController.value.text);
+                                  },
                                 ),
                               )
                             ],
                           ));
                     },
                     child: TextField(
+                      textAlign: TextAlign.center,
                       enabled: false,
                       decoration: InputDecoration(
-                          hintText: controller.person.value.name,
+                          hintText: controller.person.value.getName(),
                           labelStyle: TextStyle(
                               color: GlobalColor.textColor,
                               fontSize: 18,
@@ -118,6 +124,7 @@ class ProfilView extends GetView<ProfilController> {
                           ));
                     },
                     child: TextField(
+                      textAlign: TextAlign.center,
                       enabled: false,
                       decoration: InputDecoration(
                           hintText: controller.person.value.email,
@@ -167,6 +174,7 @@ class ProfilView extends GetView<ProfilController> {
                           ));
                     },
                     child: TextField(
+                      textAlign: TextAlign.center,
                       enabled: false,
                       decoration: InputDecoration(
                           hintText: "0677889933",
@@ -216,6 +224,7 @@ class ProfilView extends GetView<ProfilController> {
                         ));
                   },
                   child: TextField(
+                    textAlign: TextAlign.center,
                     enabled: false,
                     decoration: InputDecoration(
                         hintText: controller.person.value.email,
