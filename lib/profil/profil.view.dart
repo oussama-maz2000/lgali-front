@@ -67,7 +67,6 @@ class ProfilView extends GetView<ProfilController> {
                                   onPressed: () {
                                     controller.person.value.setName(
                                         controller.nameController.value.text);
-                                    print(controller.nameController.value.text);
                                   },
                                 ),
                               )
