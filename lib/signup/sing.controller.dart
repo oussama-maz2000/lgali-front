@@ -2,34 +2,21 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 class SignContoller extends GetxController {
-  final GlobalKey<FormState> signFormKey = GlobalKey<FormState>();
-  late TextEditingController userController,
-      emailController,
-      passwordController;
-  var user = '';
-  var email = '';
-  var password = '';
+  GlobalKey<FormState> signFormKey = GlobalKey<FormState>();
+  late TextEditingController emailController, passwordController;
 
   @override
   void onInit() {
     super.onInit();
-    userController = TextEditingController();
+
     emailController = TextEditingController();
     passwordController = TextEditingController();
   }
 
   @override
   void onClose() {
-    userController.dispose();
     emailController.dispose();
     passwordController.dispose();
-  }
-
-  String? validateUserName(String userName) {
-    if (userName.length < 6) {
-      return "User Name must be more then 6 characters";
-    }
-    return null;
   }
 
   String? validateEmail(String emailClient) {
@@ -51,6 +38,9 @@ class SignContoller extends GetxController {
     if (!isValid) {
       return;
     }
+    print('from signup');
     print(signFormKey.currentState!);
+    print('email : ' + emailController.value.text);
+    print('password : ' + passwordController.value.text);
   }
 }

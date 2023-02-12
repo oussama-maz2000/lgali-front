@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lgali/home/home.controller.dart';
 import 'package:lgali/notification/notification.view.dart';
+import 'package:lgali/profil/profil.view.dart';
 
 import '../utils/global.color.dart';
 import '../views/widgets/card.form.dart';
@@ -26,7 +27,7 @@ class HomeScreen extends GetView<HomeController> {
                     color: GlobalColor.mainColor,
                   ),
                   onPressed: () {
-                    //Get.to(profilScreen);
+                    Get.to(ProfilView());
                   },
                 ))
           ]),

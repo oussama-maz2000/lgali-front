@@ -47,7 +47,6 @@ class LoginView extends GetView<LoginController> {
               // Email Input
               TextFormField(
                 controller: controller.emailController,
-                onSaved: (value) => {controller.email = value!},
                 validator: (value) {
                   return controller.validateEmail(value!);
                 },
@@ -62,7 +61,6 @@ class LoginView extends GetView<LoginController> {
               // password Input
               TextFormField(
                 controller: controller.passwordController,
-                onSaved: (value) => {controller.password = value!},
                 validator: (value) {
                   return controller.validatePassword(value!);
                 },
@@ -118,7 +116,7 @@ class LoginView extends GetView<LoginController> {
           ),
           InkWell(
             onTap: () {
-              Get.to(SignView());
+              Get.off(() => SignView());
             },
             child: Text(
               ' Sign Up',

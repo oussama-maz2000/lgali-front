@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import 'package:lgali/home/home.view.dart';
 import 'package:lgali/notification/notification.view.dart';
+
 import 'package:lgali/utils/global.color.dart';
 
 import 'dashbord.controller.dart';
