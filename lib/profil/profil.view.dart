@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:lgali/profil/profil.controller.dart';
+import 'package:lgali/information/user/user.controller.dart';
 
 import 'package:lgali/utils/global.color.dart';
 
-class ProfilView extends GetView<ProfilController> {
-  final _controlleur = Get.put(ProfilController());
+class ProfilView extends GetView<UserController> {
+  final _controlleur = Get.put(UserController());
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -49,7 +49,7 @@ class ProfilView extends GetView<ProfilController> {
                               SizedBox(
                                 height: 35,
                                 child: TextField(
-                                    controller: controller.nameController,
+                                   // controller: controller.nameController,
                                     decoration: InputDecoration(
                                         labelText: "name",
                                         border: OutlineInputBorder())),
@@ -65,8 +65,8 @@ class ProfilView extends GetView<ProfilController> {
                                         fontSize: 14, color: Colors.white),
                                   ),
                                   onPressed: () {
-                                    controller.person.value.setName(
-                                        controller.nameController.value.text);
+                                  //  controller.person.value.setName(
+                                    //    controller.nameController.value.text);
                                   },
                                 ),
                               )
@@ -77,7 +77,7 @@ class ProfilView extends GetView<ProfilController> {
                       textAlign: TextAlign.center,
                       enabled: false,
                       decoration: InputDecoration(
-                          hintText: controller.person.value.getName(),
+                        //  hintText: controller.person.value.getName(),
                           labelStyle: TextStyle(
                               color: GlobalColor.textColor,
                               fontSize: 18,
@@ -126,7 +126,7 @@ class ProfilView extends GetView<ProfilController> {
                       textAlign: TextAlign.center,
                       enabled: false,
                       decoration: InputDecoration(
-                          hintText: controller.person.value.email,
+                     //     hintText: controller.person.value.email,
                           labelStyle: TextStyle(
                               color: GlobalColor.textColor,
                               fontSize: 18,
@@ -226,7 +226,7 @@ class ProfilView extends GetView<ProfilController> {
                     textAlign: TextAlign.center,
                     enabled: false,
                     decoration: InputDecoration(
-                        hintText: controller.person.value.email,
+                    //    hintText: controller.person.value.email,
                         labelStyle: TextStyle(
                             color: GlobalColor.textColor,
                             fontSize: 18,

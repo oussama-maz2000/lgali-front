@@ -2,128 +2,170 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lgali/login/login.controller.dart';
 import 'package:lgali/login/login.view.dart';
+import 'package:lgali/signup/otp.view.dart';
 import 'package:lgali/signup/sing.controller.dart';
 import 'package:lgali/views/widgets/button.form.dart';
 import 'package:lgali/views/widgets/social.login.dart';
 import 'package:lgali/views/widgets/text.form.dart';
+import 'package:line_icons/line_icons.dart';
 import '../utils/global.color.dart';
 import 'package:get/route_manager.dart';
 
-class SignView extends GetView<SignContoller> {
-  final _controller = Get.put(SignContoller());
+class SignView extends GetView<SignController> {
+  final _controller = Get.put(SignController());
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: SafeArea(
-            child: Container(
-          width: double.infinity,
-          padding: EdgeInsets.all(15),
-          child: Form(
-            key: controller.signFormKey,
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              SizedBox(height: 40),
-              Container(
-                alignment: Alignment.center,
+    return SafeArea(
+      child: Scaffold(
+        body: Container(
+          child: Stack(
+            children: [
+              Positioned(
+                left: 1,
+                right: 340,
+                height: 40,
+                top: 5,
+                child: RawMaterialButton(
+                  onPressed: () {
+                    print('go back');
+                  },
+                  elevation: 2.0,
+                  fillColor: Colors.white,
+                  child: Icon(LineIcons.arrowLeft, size: 25),
+                  shape: CircleBorder(),
+                ),
+              ),
+              Positioned(
+                top: 28,
+                left: 150,
+                right: 150,
+                height: 40,
+                child: Icon(
+                  LineIcons.phone,
+                  size: 80,
+                  color: Colors.black,
+                ),
+              ),
+              Positioned(
+                top: 120,
+                left: 100,
+                right: 100,
                 child: Text(
-                  "LGALI",
+                  "Entre your phone number",
                   style: TextStyle(
-                      fontFamily: 'brandon',
-                      color: GlobalColor.mainColor,
-                      fontSize: 35,
-                      fontWeight: FontWeight.bold),
+                      color: Colors.black,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500),
                 ),
               ),
-              SizedBox(height: 50),
-              Text('Create new  account :',
+              Positioned(
+                top: 150,
+                left: 90,
+                right: 90,
+                child: Text(
+                  "We'll send you a verification code",
                   style: TextStyle(
-                      color: GlobalColor.textColor,
-                      fontSize: 25,
-                      fontWeight: FontWeight.w500)),
-              SizedBox(height: 25),
-              // Email Input
-              TextFormField(
-                controller: controller.emailController,
-                validator: (value) {
-                  return controller.validateEmail(value!);
-                },
-                decoration: InputDecoration(
-                    hintText: 'Email',
-                    border: InputBorder.none,
-                    hintStyle: TextStyle(height: 1),
-                    prefixIcon: Icon(Icons.email_rounded)),
-                keyboardType: TextInputType.emailAddress,
-              ),
-              SizedBox(height: 15),
-              // password Input
-              TextFormField(
-                controller: controller.passwordController,
-                validator: (value) {
-                  return controller.validatePassword(value!);
-                },
-                decoration: InputDecoration(
-                    hintText: 'Password',
-                    border: InputBorder.none,
-                    hintStyle: TextStyle(height: 1),
-                    prefixIcon: Icon(Icons.lock)),
-                keyboardType: TextInputType.visiblePassword,
-                obscureText: true,
-              ),
-              SizedBox(height: 20),
-
-              InkWell(
-                onTap: () => {controller.checkSign()},
-                child: Container(
-                  alignment: Alignment.center,
-                  height: 55,
-                  decoration: BoxDecoration(
-                      color: GlobalColor.mainColor,
-                      borderRadius: BorderRadius.circular(6),
-                      boxShadow: [
-                        BoxShadow(
-                          color: GlobalColor.mainColor.withOpacity(0.7),
-                          blurRadius: 10,
-                        )
-                      ]),
-                  child: Text(
-                    'Sign Up',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 20),
-                  ),
+                      color: Colors.grey,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w500),
                 ),
               ),
-
-              SizedBox(height: 40),
-              SocialLogin(),
-            ]),
+              Positioned(
+                  top: 180,
+                  left: 3,
+                  right: 3,
+                  child: Container(
+                    width: 400,
+                    height: 160,
+                    child: Card(
+                      elevation: 8,
+                      color: GlobalColor.cardColor,
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 15,
+                          ),
+                          SizedBox(
+                            width: 360,
+                            child: Center(
+                              child: Container(
+                                child: TextFormField(
+                                  controller: controller.phoneController,
+                                  onChanged: (v) {
+                                    if (v.length == 10) {
+                                      controller.button.value =
+                                          GlobalColor.buttonColor;
+                                      controller.text.value = GlobalColor.white;
+                                      controller.isValid.value = true;
+                                      print(controller.isValid.value);
+                                    } else if (v.length < 10 || v.length > 10) {
+                                      controller.button.value =
+                                          GlobalColor.white;
+                                      controller.text.value = GlobalColor.black;
+                                      controller.isValid.value = false;
+                                    }
+                                    ;
+                                  },
+                                  style: TextStyle(fontSize: 20),
+                                  autofocus: true,
+                                  decoration: InputDecoration(
+                                    hintText: 'Phone number',
+                                    prefix: Padding(
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 8),
+                                      child: Text(
+                                        '+213',
+                                        style: TextStyle(fontSize: 15),
+                                      ),
+                                    ),
+                                    border: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    hintStyle:
+                                        TextStyle(height: 1, fontSize: 20),
+                                  ),
+                                  keyboardType: TextInputType.number,
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          Obx(
+                            () => InkWell(
+                              onTap: () => {
+                                if(controller.isValid.isTrue){
+                                  controller.sendOtp(),
+                                  Get.to(()=>OtpView())
+                                }
+                              },
+                              child: Container(
+                                alignment: Alignment.center,
+                                height: 55,
+                                width: 360,
+                                decoration: BoxDecoration(
+                                  color: controller.button.value,
+                                  borderRadius: BorderRadius.circular(6),
+                                ),
+                                child: Text(
+                                  'Send',
+                                  style: TextStyle(
+                                      color: controller.text.value,
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 23),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ))
+            ],
           ),
-        )),
-      ),
-      bottomNavigationBar: Container(
-        alignment: Alignment.center,
-        padding: EdgeInsets.only(bottom: 15),
-        color: Colors.white,
-        height: 40,
-        child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-          Text(
-            "You have account ?",
-            style: TextStyle(color: GlobalColor.textColor, fontSize: 12),
-          ),
-          InkWell(
-            onTap: () {
-              Get.off(() => LoginView());
-            },
-            child: Text(
-              ' Log In',
-              style: TextStyle(color: GlobalColor.mainColor, fontSize: 15),
-            ),
-          )
-        ]),
+        ),
       ),
     );
   }

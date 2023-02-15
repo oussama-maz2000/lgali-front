@@ -46,26 +46,30 @@ class HomeScreen extends GetView<HomeController> {
                   fontWeight: FontWeight.w500),
             ),
           ),
-          Expanded(
-              child: GridView.count(
-            crossAxisCount: 2,
-            shrinkWrap: true,
-            crossAxisSpacing: 8,
-            mainAxisSpacing: 8,
-            children: [
-              CardCustom(),
-              CardCustom(),
-              CardCustom(),
-              CardCustom(),
-              CardCustom(),
-              CardCustom(),
-              CardCustom(),
-              CardCustom(),
-              CardCustom(),
-              CardCustom(),
-              CardCustom(),
-            ],
-          ))
+          Obx(
+            () => controller.checkGPS == true
+                ? Expanded(
+                    child: GridView.count(
+                    crossAxisCount: 2,
+                    shrinkWrap: true,
+                    crossAxisSpacing: 8,
+                    mainAxisSpacing: 8,
+                    children: [
+                      CardCustom(),
+                      CardCustom(),
+                      CardCustom(),
+                      CardCustom(),
+                      CardCustom(),
+                      CardCustom(),
+                      CardCustom(),
+                      CardCustom(),
+                      CardCustom(),
+                      CardCustom(),
+                      CardCustom(),
+                    ],
+                  ))
+                : Text('enable you GPS please'),
+          )
         ],
       )),
     );

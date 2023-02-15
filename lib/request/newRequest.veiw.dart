@@ -23,6 +23,7 @@ class NewRequestView extends GetView<RequestController> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           elevation: 0,
           backgroundColor: Colors.white,
@@ -55,10 +56,12 @@ class NewRequestView extends GetView<RequestController> {
                               value: e,
                             ))
                         .toList(),
-                    onChanged: (value) {},
+                    onChanged: (value) {
+                      controller.selectedItem.value = value!;
+                    },
                     icon: Icon(
                       Icons.arrow_drop_down_rounded,
-                      color: Colors.blueGrey,
+                      color: Color.fromARGB(255, 219, 221, 222),
                       size: 40,
                     ),
                     dropdownColor: Color.fromARGB(255, 212, 225, 232),
@@ -81,6 +84,7 @@ class NewRequestView extends GetView<RequestController> {
                 child: SizedBox(
                   width: 320,
                   child: TextField(
+                    controller: controller.descriptionController,
                     maxLines: 3,
                     decoration: InputDecoration(
                         hintText: "description",
@@ -160,7 +164,7 @@ class NewRequestView extends GetView<RequestController> {
                 ],
               ),
               SizedBox(
-                height: 250,
+                height: 100,
               ),
               Container(
                   margin: EdgeInsets.only(left: 40, right: 40),
@@ -171,7 +175,9 @@ class NewRequestView extends GetView<RequestController> {
                       "Done",
                       style: TextStyle(fontSize: 20, color: Colors.white),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      print(controller.selectedImagePath.value.isImageFileName);
+                    },
                   )),
             ],
           ),

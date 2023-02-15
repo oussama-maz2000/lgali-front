@@ -1,46 +1,35 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:lgali/model/credential.model.dart';
+import 'package:lgali/utils/global.color.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-class SignContoller extends GetxController {
-  GlobalKey<FormState> signFormKey = GlobalKey<FormState>();
-  late TextEditingController emailController, passwordController;
+class SignController extends GetxController {
+  final supabase=Supabase.instance.client;
+  User?user;
+  var isValid = false.obs;
+  TextEditingController phoneController = TextEditingController();
+  late Credential credential;
+  var button = GlobalColor.white.obs;
+  var text = GlobalColor.black.obs;
 
   @override
   void onInit() {
     super.onInit();
-
-    emailController = TextEditingController();
-    passwordController = TextEditingController();
   }
 
   @override
   void onClose() {
-    emailController.dispose();
-    passwordController.dispose();
+    phoneController.dispose();
   }
 
-  String? validateEmail(String emailClient) {
-    if (!GetUtils.isEmail(emailClient)) {
-      return "Provide valid email";
-    }
-    return null;
-  }
+  Future<void> sendOtp() async {
+    try{
+      var authResponse=await supabase.auth.signInWithOtp(phone: '+2130696085252' );
 
-  String? validatePassword(String passwordClient) {
-    if (passwordClient.length < 6) {
-      return "Password must be of 6 characters";
     }
-    return null;
-  }
-
-  void checkSign() {
-    final isValid = signFormKey.currentState!.validate();
-    if (!isValid) {
-      return;
-    }
-    print('from signup');
-    print(signFormKey.currentState!);
-    print('email : ' + emailController.value.text);
-    print('password : ' + passwordController.value.text);
+        catch(e){
+      print(e);
+        }
   }
 }
