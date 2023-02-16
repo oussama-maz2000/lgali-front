@@ -14,6 +14,8 @@ import 'package:lgali/splash/splash.controller.dart';
 import 'package:lgali/utils/global.color.dart';
 import 'package:lgali/dashbord/dashbord.view.dart';
 
+import '../registration/registration.view.dart';
+
 class SplashView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

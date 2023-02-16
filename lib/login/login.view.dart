@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 import 'package:lgali/login/login.controller.dart';
 import 'package:lgali/signup/sign.view.dart';
 import 'package:lgali/views/widgets/social.login.dart';
+import 'package:line_icons/line_icon.dart';
+import 'package:line_icons/line_icons.dart';
 
 import '../views/widgets/text.form.dart';
 
@@ -14,117 +16,179 @@ class LoginView extends GetView<LoginController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: SafeArea(
-            child: Container(
-          width: double.infinity,
-          padding: EdgeInsets.all(15),
-          child: Form(
-            key: controller.loginFormKey,
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              SizedBox(height: 40),
-              Container(
-                alignment: Alignment.center,
-                child: Text(
-                  "LGALI",
-                  style: TextStyle(
-                      fontFamily: 'brandon',
-                      color: GlobalColor.mainColor,
-                      fontSize: 35,
-                      fontWeight: FontWeight.bold),
-                ),
-              ),
-              SizedBox(height: 50),
-              Text('Log in to your account :',
-                  style: TextStyle(
-                      color: GlobalColor.textColor,
-                      fontSize: 25,
-                      fontWeight: FontWeight.w500)),
-              SizedBox(height: 25),
-              // Email Input
-              TextFormField(
-                controller: controller.emailController,
-                validator: (value) {
-                  return controller.validateEmail(value!);
-                },
-                decoration: InputDecoration(
-                    hintText: 'Email',
-                    border: InputBorder.none,
-                    hintStyle: TextStyle(height: 1),
-                    prefixIcon: Icon(Icons.email_rounded)),
-                keyboardType: TextInputType.emailAddress,
-              ),
-              SizedBox(height: 15),
-              // password Input
-              TextFormField(
-                controller: controller.passwordController,
-                validator: (value) {
-                  return controller.validatePassword(value!);
-                },
-                decoration: InputDecoration(
-                    hintText: 'Password',
-                    border: InputBorder.none,
-                    hintStyle: TextStyle(height: 1),
-                    prefixIcon: Icon(Icons.lock)),
-                keyboardType: TextInputType.visiblePassword,
-                obscureText: true,
-              ),
-              SizedBox(height: 20),
+  return SafeArea(
+    child: Scaffold(
+      resizeToAvoidBottomInset: false,
 
-              InkWell(
-                onTap: () => {controller.checkLogin()},
-                child: Container(
-                  alignment: Alignment.center,
-                  height: 55,
-                  decoration: BoxDecoration(
-                      color: GlobalColor.mainColor,
-                      borderRadius: BorderRadius.circular(6),
-                      boxShadow: [
-                        BoxShadow(
-                          color: GlobalColor.mainColor.withOpacity(0.7),
-                          blurRadius: 10,
-                        )
-                      ]),
-                  child: Text(
-                    'Log In',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 20),
-                  ),
-                ),
+      body: Container(
+        child: Stack(
+          children: [
+            Positioned(
+              left: 1,
+              right: 340,
+              height: 40,
+              top: 5,
+              child: RawMaterialButton(
+                onPressed: () {
+                  print('go back');
+                },
+                elevation: 2.0,
+                fillColor: Colors.white,
+                child: Icon(LineIcons.arrowLeft, size: 25),
+                shape: CircleBorder(),
               ),
-
-              SizedBox(height: 40),
-              SocialLogin(),
-            ]),
-          ),
-        )),
-      ),
-      bottomNavigationBar: Container(
-        alignment: Alignment.center,
-        padding: EdgeInsets.only(bottom: 15),
-        color: Colors.white,
-        height: 40,
-        child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-          Text(
-            "Don't have account ?",
-            style: TextStyle(color: GlobalColor.textColor, fontSize: 12),
-          ),
-          InkWell(
-            onTap: () {
-              Get.off(() => SignView());
-            },
-            child: Text(
-              ' Sign Up',
-              style: TextStyle(color: GlobalColor.mainColor, fontSize: 15),
             ),
-          )
-        ]),
+            Positioned(
+              top: 28,
+              left: 130,
+              right: 150,
+              height: 40,
+              child: Icon(
+                Icons.login_rounded,
+                size: 80,
+                color: Colors.black,
+              ),
+            ),
+            Positioned(
+              top: 140,
+              left: 87,
+              //right: 130,
+              child: Text(
+                "Welcome to you account ",
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 22,
+                    fontWeight: FontWeight.w500),
+              ),
+            ),
+
+            Positioned(
+                top: 180,
+                left: 3,
+                right: 3,
+                child: Container(
+                  width: 400,
+                  height: 262,
+                  child: Card(
+                    elevation: 5,
+                    color: GlobalColor.cardColor,
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 15,
+                        ),
+                        SizedBox(
+                          width: 360,
+                          child: Center(
+                            child: Container(
+                              child: TextFormField(
+
+                                onChanged: (v) {
+
+                                },
+                                style: TextStyle(fontSize: 23),
+                                autofocus: true,
+                                decoration: InputDecoration(
+                                    hintText: 'Email address',
+                                    border: OutlineInputBorder(
+                                        borderRadius:
+                                        BorderRadius.circular(10)),
+                                    hintStyle:
+                                    TextStyle(height: 1, fontSize: 20),
+                                    prefixIcon: Icon(Icons.email_rounded)
+                                ),
+                                keyboardType: TextInputType.emailAddress,
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 10,),
+                        SizedBox(
+                          width: 360,
+                          child: Center(
+                            child: Container(
+                              child: TextFormField(
+                                obscureText: true,
+                                onChanged: (v) {
+
+                                },
+                                style: TextStyle(fontSize: 23),
+                                autofocus: true,
+                                decoration: InputDecoration(
+                                    hintText: 'Password',
+                                    border: OutlineInputBorder(
+                                        borderRadius:
+                                        BorderRadius.circular(10)),
+                                    hintStyle:
+                                    TextStyle(height: 1, fontSize: 20),
+                                    prefixIcon: Icon(Icons.lock_outline_rounded)
+                                ),
+                                keyboardType: TextInputType.text,
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 30,
+                        ),
+                      InkWell(
+                            onTap: () => {
+
+                            },
+                            child: Container(
+                              alignment: Alignment.center,
+                              height: 55,
+                              width: 360,
+                              decoration: BoxDecoration(
+                                color: Colors.black,
+                                borderRadius: BorderRadius.circular(6),
+                              ),
+                              child: Text(
+                                'Log in',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 23),
+                              ),
+                            ),
+                          ),
+
+                        SizedBox(height: 10,)
+                      ],
+                    ),
+                  ),
+                )),
+            Positioned(
+                top :450,
+                left: 100,
+                right: 90,
+                child: Container(child: Row(
+                  children: [
+                    Text(
+                      "You haven't account ?",
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: GlobalColor.textColor,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                    SizedBox(width: 7,),
+                    InkWell(
+                      child: Text(
+                        "Sign up",
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: GlobalColor.buttonColor,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),))
+
+          ],
+        ),
       ),
-    );
-  }
-}
+    ),
+  );;
+  }}
