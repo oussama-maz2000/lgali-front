@@ -23,7 +23,7 @@ class SplashView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Timer(Duration(seconds: 3), () {
-      Get.to(() =>DashBordScreen());
+      Get.to(() =>SignView());
     });
     return Scaffold(
         backgroundColor: GlobalColor.mainColor,

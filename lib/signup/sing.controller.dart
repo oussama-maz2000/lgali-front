@@ -34,7 +34,11 @@ class SignController extends GetxController {
       final AuthResponse response = await supabase.auth.signUp(
           password: passwordController.value.text,
           email: emailController.value.text);
-
+      Get.snackbar("Registration", "You will receive code in your email",
+          backgroundColor: GlobalColor.greenColor,
+          colorText: Colors.white,
+          margin: EdgeInsets.only(bottom: 4, left: 4, right: 4),
+          snackPosition: SnackPosition.BOTTOM);
       Get.to(() => OtpView());
     }
   }

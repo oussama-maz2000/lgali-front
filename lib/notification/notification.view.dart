@@ -19,7 +19,7 @@ class NotificationScreen extends GetView<NotificationController> {
             ),
             Container(
               alignment: Alignment.center,
-              child: Text('Notifications',
+              child: Text('Services Accepted',
                   style: TextStyle(
                       color: GlobalColor.buttonColor,
                       fontFamily: 'Nunito',

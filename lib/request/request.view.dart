@@ -37,7 +37,7 @@ class RequestView extends StatelessWidget {
             bottom: 2,
             child: Container(
               child: InkWell(
-                onTap: () => {Get.off(() => NewRequestView())},
+                onTap: () => {Get.to(() => NewRequestView())},
                 child: Container(
                   alignment: Alignment.center,
                   height: 55,

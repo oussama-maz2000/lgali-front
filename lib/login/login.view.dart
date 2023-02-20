@@ -38,25 +38,25 @@ class LoginView extends GetView<LoginController> {
                 ),
               ),
               Positioned(
-                top: 28,
+                top: 35,
                 left: 130,
                 right: 150,
                 height: 40,
                 child: Icon(
                   Icons.login_rounded,
-                  size: 80,
+                  size: 90,
                   color: Colors.black,
                 ),
               ),
               Positioned(
-                top: 140,
-                left: 87,
+                top: 145,
+                left: 159,
                 //right: 130,
                 child: Text(
-                  "Welcome to you account ",
+                  "Log in",
                   style: TextStyle(
                       color: Colors.black,
-                      fontSize: 22,
+                      fontSize: 30,
                       fontWeight: FontWeight.w500),
                 ),
               ),
@@ -90,7 +90,6 @@ class LoginView extends GetView<LoginController> {
                                     }
                                   },
                                   style: TextStyle(fontSize: 23),
-                                  autofocus: true,
                                   decoration: InputDecoration(
                                       hintText: 'Email address',
                                       border: OutlineInputBorder(
@@ -122,7 +121,6 @@ class LoginView extends GetView<LoginController> {
                                     }
                                   },
                                   style: TextStyle(fontSize: 23),
-                                  autofocus: true,
                                   decoration: InputDecoration(
                                       hintText: 'Password',
                                       border: OutlineInputBorder(

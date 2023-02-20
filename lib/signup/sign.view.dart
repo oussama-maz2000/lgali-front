@@ -43,20 +43,20 @@ class SignView extends GetView<SignController> {
                 right: 150,
                 height: 40,
                 child: Icon(
-                  Icons.email_rounded,
+                  LineIcons.userLock,
                   size: 90,
                   color: Colors.black,
                 ),
               ),
               Positioned(
-                top: 140,
-                left: 50,
+                top: 145,
+                left: 155,
                 //right: 130,
                 child: Text(
-                  "Enter your email & password ",
+                  "Sign Up ",
                   style: TextStyle(
                       color: Colors.black,
-                      fontSize: 24,
+                      fontSize: 30,
                       fontWeight: FontWeight.w500),
                 ),
               ),
@@ -90,7 +90,7 @@ class SignView extends GetView<SignController> {
                                     }
                                   },
                                   style: TextStyle(fontSize: 23),
-                                  autofocus: true,
+
                                   decoration: InputDecoration(
                                       hintText: 'Email address',
                                       border: OutlineInputBorder(
@@ -122,7 +122,7 @@ class SignView extends GetView<SignController> {
                                     }
                                   },
                                   style: TextStyle(fontSize: 23),
-                                  autofocus: true,
+
                                   decoration: InputDecoration(
                                       hintText: 'Password',
                                       border: OutlineInputBorder(
@@ -150,7 +150,7 @@ class SignView extends GetView<SignController> {
                               height: 55,
                               width: 360,
                               decoration: BoxDecoration(
-                                color: GlobalColor.buttonColor,
+                                color: GlobalColor.black,
                                 borderRadius: BorderRadius.circular(6),
                               ),
                               child: Text(
