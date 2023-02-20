@@ -1,48 +1,72 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lgali/dashbord/dashbord.view.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+
+import '../model/credential.model.dart';
 
 class LoginController extends GetxController {
-  GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
+  final data = Get.put(PersonData());
+
+  final supabase = Supabase.instance.client;
 
   late TextEditingController emailController, passwordController;
+  var emailValid ;
+  var passwordValid ;
+   String?session;
+   User?user;
+  bool isAuthenticated = false;
+
+
+
 
   @override
   void onInit() {
     super.onInit();
-
+    emailValid = false.obs;
+    passwordValid = false.obs;
     emailController = TextEditingController();
     passwordController = TextEditingController();
   }
 
-  @override
-  void onClose() {
-    emailController.dispose();
-    passwordController.dispose();
-  }
 
-  String? validateEmail(String emailClient) {
-    if (!GetUtils.isEmail(emailClient)) {
-      return "Provide valid email";
-    }
-    return null;
-  }
 
-  String? validatePassword(String passwordClient) {
-    if (passwordClient.length < 6) {
-      return "Password must be of 6 characters";
-    }
-    return null;
-  }
 
-  void checkLogin() {
-    print(passwordController.value.text);
-    final isValid = loginFormKey.currentState!.validate();
-    if (!isValid) {
-      return;
+
+  Future<void> logInWithPassword()async{
+    try{
+
+      final AuthResponse response=await supabase.auth.signInWithPassword(
+        password: passwordController.value.text,
+        email: emailController.value.text);
+    user=response.user;
+    session=supabase.auth.currentSession?.accessToken;
+    session == null ? isAuthenticated = false : isAuthenticated = true;
+
+    print('_______Session_______');
+    print(session);
+    data.storage.write('session',session);
+
+    print('_______UserID_______');
+    print(user?.id);
+    data.storage.write("id", user?.id);
+
+    print('_______UserEmail_______');
+    print(user?.email);
+    data.storage.write("email", user?.email);
+
+    print('_______IsAuthenticated_______');
+    print(isAuthenticated);
+    data.storage.write("isAuth",isAuthenticated );
+
+    Get.offAll(()=>DashBordScreen());
     }
-    print('from login');
-    print(loginFormKey.currentState);
-    print('email : ' + emailController.value.text);
-    print('password : ' + passwordController.value.text);
+        catch(e){
+          Get.snackbar("Error", "Incorrect email or password",
+              backgroundColor: Colors.redAccent,
+              colorText: Colors.white,
+              margin: EdgeInsets.only(bottom: 4, left: 4, right: 4),
+              snackPosition: SnackPosition.BOTTOM);
+        }
   }
 }

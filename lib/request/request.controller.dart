@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
@@ -10,12 +11,35 @@ class RequestController extends GetxController {
       "AIzaSyDS49TdZt6CC3DLj5WdIycGxGfar6YU04A";
   var selectedImagePath = ''.obs;
   var selectedItem = ''.obs;
+  var selectedImageSize = ''.obs;
+  var pickedFile;
   late TextEditingController descriptionController = TextEditingController();
 
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+    selectedImageSize.value = 'Insert image';
+  }
+
   void getImage(ImageSource imageSource) async {
-    final pickedFile = await ImagePicker().getImage(source: imageSource);
+    pickedFile = await ImagePicker().getImage(source: imageSource);
+    selectedImagePath.value = pickedFile.path;
+    selectedImageSize.value =
+        (File(selectedImagePath.value).lengthSync() / 1024 / 1024)
+                .toStringAsFixed(2) +
+            "MB";
+  }
+
+  Future<void> sendRequest() async{
+    print("called");
     if (pickedFile != null) {
-      selectedImagePath.value = pickedFile.path;
+      Position position=await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+      print(descriptionController.value.text);
+      print(selectedItem.value);
+      print(selectedImagePath.value);
+      print(position.latitude);
+      print(position.longitude);
     } else {
       Get.snackbar("error", "No image selected",
           snackPosition: SnackPosition.BOTTOM,

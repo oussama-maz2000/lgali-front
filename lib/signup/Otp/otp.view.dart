@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:lgali/signUp/sign.view.dart';
-import 'package:lgali/signup/otp.controller.dart';
+import 'package:lgali/signup/Otp/otp.controller.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:pinput/pinput.dart';
 
-import '../utils/global.color.dart';
+import '../../utils/global.color.dart';
 
 class OtpView extends GetView<OtpController> {
   final _controller = Get.put(OtpController());
@@ -28,6 +28,7 @@ class OtpView extends GetView<OtpController> {
                 child: RawMaterialButton(
                   onPressed: () {
                     Get.to(SignView());
+
                   },
                   elevation: 2.0,
                   fillColor: Colors.white,
@@ -103,7 +104,7 @@ class OtpView extends GetView<OtpController> {
                           ),
                           InkWell(
                             onTap: () => {
-                              print(controller.otpCode.value.text)
+                              controller.verification()
                             },
                             child: Container(
                               alignment: Alignment.center,

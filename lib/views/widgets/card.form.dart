@@ -24,7 +24,7 @@ class CardCustom extends StatelessWidget {
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                   colors: [
-                    GlobalColor.mainColor,
+                    GlobalColor.validColor,
                     Color.fromARGB(255, 116, 133, 142)
                   ]),
               borderRadius: BorderRadius.circular(30)),
@@ -58,7 +58,7 @@ class CardCustom extends StatelessWidget {
                 '0673719090',
                 style: TextStyle(
                     fontFamily: 'Nunito',
-                    fontSize: 16,
+                    fontSize: 20,
                     color: Colors.white,
                     fontWeight: FontWeight.w500,
                     letterSpacing: 0.05),
@@ -68,7 +68,7 @@ class CardCustom extends StatelessWidget {
                 'Doctor',
                 style: TextStyle(
                     fontFamily: 'Nunito',
-                    fontSize: 18,
+                    fontSize: 24,
                     color: Colors.white,
                     fontWeight: FontWeight.w500,
                     letterSpacing: 0.05),

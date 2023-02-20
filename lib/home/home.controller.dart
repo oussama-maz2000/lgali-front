@@ -1,9 +1,11 @@
 import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:lgali/model/credential.model.dart';
 import 'package:location/location.dart';
 
 class HomeController extends GetxController {
+  final data=Get.put(PersonData());
   String title = "home Screen";
 
   var checkGPS = false.obs;
@@ -11,6 +13,10 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    print(data.storage.read('id'));
+    print(data.storage.read('isAuth'));
+    print(data.storage.read('session'));
+    print(data.storage.read('user'));
     cheaking();
   }
 

@@ -2,256 +2,190 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:lgali/information/user/user.controller.dart';
+import 'package:lgali/profil/profil.controller.dart';
 
 import 'package:lgali/utils/global.color.dart';
+import 'package:line_icons/line_icons.dart';
 
-class ProfilView extends GetView<UserController> {
-  final _controlleur = Get.put(UserController());
+class ProfilView extends GetView<ProfilController> {
+  final _controlleur = Get.put(ProfilController());
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: AppBar(
-          centerTitle: true,
-          elevation: 0,
-          backgroundColor: Colors.white,
-          leading: BackButton(
-            color: GlobalColor.mainColor,
-          ),
-          title: Text(
-            'Profil',
-            style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: GlobalColor.mainColor),
-          ),
-        ),
         body: Column(
           children: [
-            Container(
-              child: CircleAvatar(
-                  radius: 30,
-                  backgroundImage: AssetImage('assets/images/person.jpeg')),
-            ),
-            SizedBox(height: 30),
-            Container(
-              margin: EdgeInsets.only(left: 20, right: 20),
-              child: SizedBox(
-                  height: 50,
-                  width: 320,
-                  child: InkWell(
-                    onTap: () {
-                      Get.defaultDialog(
-                          title: "Name",
-                          content: Column(
-                            children: [
-                              SizedBox(
-                                height: 35,
-                                child: TextField(
-                                   // controller: controller.nameController,
-                                    decoration: InputDecoration(
-                                        labelText: "name",
-                                        border: OutlineInputBorder())),
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(top: 8),
-                                child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.green[300]),
-                                  child: Text(
-                                    "confirm",
-                                    style: TextStyle(
-                                        fontSize: 14, color: Colors.white),
-                                  ),
-                                  onPressed: () {
-                                  //  controller.person.value.setName(
-                                    //    controller.nameController.value.text);
-                                  },
-                                ),
-                              )
-                            ],
-                          ));
+            Row(
+              children: [
+                Container(
+                  child: RawMaterialButton(
+                    onPressed: () {
+                      Get.back();
                     },
-                    child: TextField(
-                      textAlign: TextAlign.center,
-                      enabled: false,
-                      decoration: InputDecoration(
-                        //  hintText: controller.person.value.getName(),
-                          labelStyle: TextStyle(
-                              color: GlobalColor.textColor,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600),
-                          border: OutlineInputBorder()),
-                    ),
-                  )),
-            ),
-            SizedBox(height: 20),
-            Container(
-              margin: EdgeInsets.only(left: 20, right: 20),
-              child: SizedBox(
-                  height: 50,
-                  width: 320,
-                  child: InkWell(
-                    onTap: () {
-                      Get.defaultDialog(
-                          title: "Email",
-                          content: Column(
-                            children: [
-                              SizedBox(
-                                height: 35,
-                                child: TextField(
-                                    decoration: InputDecoration(
-                                        labelText: "email",
-                                        border: OutlineInputBorder())),
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(top: 8),
-                                child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                      backgroundColor:
-                                          Color.fromARGB(255, 112, 197, 116)),
-                                  child: Text(
-                                    "confirm",
-                                    style: TextStyle(
-                                        fontSize: 14, color: Colors.white),
-                                  ),
-                                  onPressed: () {},
-                                ),
-                              )
-                            ],
-                          ));
-                    },
-                    child: TextField(
-                      textAlign: TextAlign.center,
-                      enabled: false,
-                      decoration: InputDecoration(
-                     //     hintText: controller.person.value.email,
-                          labelStyle: TextStyle(
-                              color: GlobalColor.textColor,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600),
-                          border: OutlineInputBorder()),
-                    ),
-                  )),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Container(
-              margin: EdgeInsets.only(left: 20, right: 20),
-              child: SizedBox(
-                  height: 50,
-                  width: 320,
-                  child: InkWell(
-                    onTap: () {
-                      Get.defaultDialog(
-                          title: "phone",
-                          content: Column(
-                            children: [
-                              SizedBox(
-                                height: 35,
-                                child: TextField(
-                                    decoration: InputDecoration(
-                                        labelText: "phone",
-                                        border: OutlineInputBorder())),
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(top: 8),
-                                child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.green[300]),
-                                  child: Text(
-                                    "confirm",
-                                    style: TextStyle(
-                                        fontSize: 14, color: Colors.white),
-                                  ),
-                                  onPressed: () {},
-                                ),
-                              )
-                            ],
-                          ));
-                    },
-                    child: TextField(
-                      textAlign: TextAlign.center,
-                      enabled: false,
-                      decoration: InputDecoration(
-                          hintText: "0677889933",
-                          labelStyle: TextStyle(
-                              color: GlobalColor.textColor,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600),
-                          border: OutlineInputBorder()),
-                    ),
-                  )),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Container(
-              margin: EdgeInsets.only(left: 20, right: 20),
-              child: SizedBox(
-                height: 50,
-                width: 320,
-                child: InkWell(
-                  onTap: () {
-                    Get.defaultDialog(
-                        title: "change password",
-                        content: Column(
-                          children: [
-                            SizedBox(
-                              height: 35,
-                              child: TextField(
-                                  decoration: InputDecoration(
-                                      labelText: 'password',
-                                      border: OutlineInputBorder())),
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(top: 8),
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.green[300]),
-                                child: Text(
-                                  "confirm",
-                                  style: TextStyle(
-                                      fontSize: 14, color: Colors.white),
-                                ),
-                                onPressed: () {},
-                              ),
-                            )
-                          ],
-                        ));
-                  },
-                  child: TextField(
-                    textAlign: TextAlign.center,
-                    enabled: false,
-                    decoration: InputDecoration(
-                    //    hintText: controller.person.value.email,
-                        labelStyle: TextStyle(
-                            color: GlobalColor.textColor,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600),
-                        border: OutlineInputBorder()),
+                    elevation: 2.0,
+                    fillColor: Colors.white,
+                    child: Icon(LineIcons.arrowLeft, size: 25),
+                    shape: CircleBorder(),
                   ),
                 ),
+                Container(
+                 margin: EdgeInsets.only(left:80),
+                  child: Text(
+                    'Profil',
+                    style: TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                        color: GlobalColor.buttonColor),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 20,),
+            Container(
+              child: CircleAvatar(
+                  radius: 50,
+                  backgroundImage: AssetImage('assets/images/person.jpeg')),
+            ),
+            SizedBox(height: 10),
+            Card(
+              elevation: 0,
+              color: GlobalColor.cardColor,
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 15,
+                    width: double.infinity,
+                  ),
+                  SizedBox(
+                    width: 360,
+                    child: Center(
+                      child: Container(
+                        child: TextFormField(
+                          enabled: false,
+                          onChanged: (value) {},
+                          style: TextStyle(
+                            fontSize: 23,
+                          ),
+                          autofocus: true,
+                          decoration: InputDecoration(
+                            hintText: controller.fname,
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            hintStyle: TextStyle(
+                                height: 1,
+                                fontSize: 20,
+                                color: GlobalColor.buttonColor),
+                          ),
+                          keyboardType: TextInputType.name,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 12,
+                  ),
+                  SizedBox(
+                    width: 360,
+                    child: Center(
+                      child: Container(
+                        child: TextFormField(
+                          enabled: false,
+                          onChanged: (value) {},
+                          style: TextStyle(fontSize: 23),
+                          autofocus: true,
+                          decoration: InputDecoration(
+                            hintText: controller.lname,
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            hintStyle: TextStyle(
+                                height: 1,
+                                fontSize: 20,
+                                color: GlobalColor.buttonColor),
+                          ),
+                          keyboardType: TextInputType.name,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 12,
+                  ),
+                  SizedBox(
+                    width: 360,
+                    child: Center(
+                      child: Container(
+                        child: TextFormField(
+                          enabled: false,
+                          onChanged: (value) {},
+                          style: TextStyle(fontSize: 23),
+                          autofocus: true,
+                          decoration: InputDecoration(
+                            hintText: controller.phone,
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            hintStyle: TextStyle(
+                                height: 1,
+                                fontSize: 20,
+                                color: GlobalColor.buttonColor),
+                          ),
+                          keyboardType: TextInputType.name,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 12,
+                  ),
+                  SizedBox(
+                    width: 360,
+                    child: Center(
+                      child: Container(
+                        child: TextFormField(
+                          enabled: false,
+                          onChanged: (value) {},
+                          style: TextStyle(fontSize: 23),
+                          autofocus: true,
+                          decoration: InputDecoration(
+                            hintText: controller.email,
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            hintStyle: TextStyle(
+                                height: 1,
+                                fontSize: 20,
+                                color: GlobalColor.buttonColor),
+                          ),
+                          keyboardType: TextInputType.name,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 90,
+                  ),
+                  InkWell(
+                    onTap: () => {controller.signOut()},
+                    child: Container(
+                      alignment: Alignment.center,
+                      height: 55,
+                      width: 280,
+                      decoration: BoxDecoration(
+                        color: GlobalColor.redColor,
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                      child: Text(
+                        'Log out',
+                        style: TextStyle(
+                            color: GlobalColor.white,
+                            fontWeight: FontWeight.w400,
+                            fontSize: 23),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
-            SizedBox(
-              height: 165,
-            ),
-            Container(
-                margin: EdgeInsets.only(left: 40, right: 40),
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.red[400]),
-                  child: Text(
-                    "Log Out",
-                    style: TextStyle(
-                        fontSize: 20,
-                        color: Color.fromARGB(255, 225, 221, 221)),
-                  ),
-                  onPressed: () {},
-                )),
           ],
         ),
       ),

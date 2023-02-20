@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lgali/home/home.view.dart';
 import 'package:lgali/notification/notification.view.dart';
+import 'package:lgali/request/request.view.dart';
 
 import 'package:lgali/utils/global.color.dart';
+import 'package:line_icons/line_icons.dart';
 
 import 'dashbord.controller.dart';
 
@@ -18,6 +20,7 @@ class DashBordScreen extends StatelessWidget {
       label: label,
     );
   }
+ List<Widget> _widget=[HomeScreen(), NotificationScreen(),RequestView()];
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +32,7 @@ class DashBordScreen extends StatelessWidget {
               body: Container(
                 child: IndexedStack(
                   index: controller.tabIndex,
-                  children: [HomeScreen(), NotificationScreen()],
+                  children: _widget,
                 ),
               ),
               bottomNavigationBar: BottomNavigationBar(
@@ -44,19 +47,19 @@ class DashBordScreen extends StatelessWidget {
                 elevation: 0,
                 items: [
                   _bottomNavigationBarItem(
-                    icon: Icons.home,
+                    icon: LineIcons.home,
                     label: 'Home',
                   ),
                   _bottomNavigationBarItem(
-                    icon: Icons.notification_add_rounded,
-                    label: 'Notification',
+                    icon: LineIcons.handshake,
+                    label: 'Accepted',
                   ),
                   _bottomNavigationBarItem(
-                    icon: Icons.workspace_premium_sharp,
-                    label: 'Pro',
+                    icon: LineIcons.plusCircle,
+                    label: 'Send',
                   ),
                   _bottomNavigationBarItem(
-                    icon: Icons.settings,
+                    icon: LineIcons.cogs,
                     label: 'Settings',
                   ),
                 ],

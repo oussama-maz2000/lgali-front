@@ -14,32 +14,20 @@ class NotificationScreen extends GetView<NotificationController> {
       child: Scaffold(
         body: Container(
           child: Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  margin: EdgeInsets.only(left: 4, top: 2),
-                  child: Text('Notifications',
-                      style: TextStyle(
-                          color: GlobalColor.textColor,
-                          fontFamily: 'Nunito',
-                          fontSize: 27,
-                          fontWeight: FontWeight.w600)),
-                ),
-                Container(
-                  margin: EdgeInsets.only(right: 4, top: 2),
-                  child: InkWell(
-                    onTap: () {
-                      Get.to(RequestView());
-                    },
-                    child: Icon(
-                      Icons.send_rounded,
-                      size: 30,
-                      color: GlobalColor.mainColor,
-                    ),
-                  ),
-                )
-              ],
+            SizedBox(
+              height: 10,
+            ),
+            Container(
+              alignment: Alignment.center,
+              child: Text('Notifications',
+                  style: TextStyle(
+                      color: GlobalColor.buttonColor,
+                      fontFamily: 'Nunito',
+                      fontSize: 30,
+                      fontWeight: FontWeight.w600)),
+            ),
+            SizedBox(
+              height: 10,
             ),
             Expanded(
               child: ListView(

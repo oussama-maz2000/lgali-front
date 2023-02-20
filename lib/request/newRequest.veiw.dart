@@ -9,179 +9,187 @@ import 'package:image_picker/image_picker.dart';
 import 'package:lgali/request/request.controller.dart';
 import 'package:lgali/request/request.view.dart';
 import 'package:lgali/utils/global.color.dart';
+import 'package:line_icons/line_icons.dart';
 
 class NewRequestView extends GetView<RequestController> {
   final _requestController = Get.put(RequestController());
-  final _services = ["doctor", "farmer", "pharmacie", "painter"];
-  String? _selectedValue = "";
-
-  _NewRequestViewState() {
-    _selectedValue = _services[0];
-  }
+  final _services = ["doctor", "farmer", "pharmacies", "painter"];
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Colors.white,
-          title: Text(
-            "Which service you want ?",
-            style: TextStyle(
-                color: GlobalColor.textColor,
-                fontSize: 21,
-                fontWeight: FontWeight.w500),
-          ),
-          leading: BackButton(
-            color: GlobalColor.mainColor,
-          ),
-        ),
-        body: Container(
-          margin: EdgeInsets.only(top: 10),
-          child: Column(
+        body: Column(children: [
+          Row(
             children: [
               Container(
-                margin: EdgeInsets.only(left: 20, right: 20),
-                child: SizedBox(
-                  width: 320,
-                  height: 50,
-                  child: DropdownButtonFormField(
-                    elevation: 0,
-                    // value: _selectedValue,
-                    items: _services
-                        .map((e) => DropdownMenuItem(
-                              child: Text(e),
-                              value: e,
-                            ))
-                        .toList(),
-                    onChanged: (value) {
-                      controller.selectedItem.value = value!;
-                    },
-                    icon: Icon(
-                      Icons.arrow_drop_down_rounded,
-                      color: Color.fromARGB(255, 219, 221, 222),
-                      size: 40,
-                    ),
-                    dropdownColor: Color.fromARGB(255, 212, 225, 232),
-                    decoration: InputDecoration(
-                      hintText: "service type",
-                      labelStyle: TextStyle(
-                          color: GlobalColor.textColor,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600),
-                      border: OutlineInputBorder(),
-                    ),
-                  ),
+                child: RawMaterialButton(
+                  onPressed: () {
+                    Get.back();
+                  },
+                  elevation: 2.0,
+                  fillColor: Colors.white,
+                  child: Icon(LineIcons.arrowLeft, size: 25),
+                  shape: CircleBorder(),
                 ),
               ),
-              SizedBox(
-                height: 15,
-              ),
               Container(
-                margin: EdgeInsets.only(left: 20, right: 20),
-                child: SizedBox(
-                  width: 320,
-                  child: TextField(
-                    controller: controller.descriptionController,
-                    maxLines: 3,
-                    decoration: InputDecoration(
-                        hintText: "description",
-                        labelStyle: TextStyle(
-                            color: GlobalColor.textColor,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600),
-                        border: OutlineInputBorder()),
-                  ),
+                margin: EdgeInsets.only(top: 50),
+                child: Text(
+                  "Which service you want ?",
+                  style: TextStyle(
+                      color: GlobalColor.textColor,
+                      fontSize: 23,
+                      fontWeight: FontWeight.w500),
                 ),
               ),
-              SizedBox(
-                height: 15,
-              ),
-              Container(
-                child: Obx(() => controller.selectedImagePath.value == ''
-                    ? Text(
-                        'select image from camera/galery',
-                        style: TextStyle(fontSize: 15),
-                      )
-                    : Card(
-                        color: Colors.white,
-                        elevation: 0,
-                        child: Container(
-                          height: 200,
-                          width: double.infinity,
-                          child: Image.file(
-                              File(controller.selectedImagePath.value)),
-                        ))),
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            ],
+          ),
+          Container(
+            margin: EdgeInsets.only(top: 10),
+            child: Card(
+              elevation: 0,
+              color: GlobalColor.cardColor,
+              child: Column(
                 children: [
-                  InkWell(
-                    onTap: () => {controller.getImage(ImageSource.gallery)},
-                    child: Container(
-                      height: 40,
-                      width: 100,
-                      decoration: BoxDecoration(
-                        color: GlobalColor.mainColor,
-                        borderRadius: BorderRadius.circular(6),
-                      ),
-                      child: Center(
-                        child: Text(
-                          'Galery',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 17),
+                  SizedBox(
+                    height: 15,
+                    width: double.infinity,
+                  ),
+                  SizedBox(
+                    width: 360,
+                    child: Center(
+                      child: Container(
+                        child: DropdownButtonFormField(
+                          elevation: 0,
+                          // value: _selectedValue,
+                          items: _services
+                              .map((e) => DropdownMenuItem(
+                                    child: Text(
+                                      e,
+                                      style: TextStyle(
+                                          fontSize: 23,
+                                          color: GlobalColor.buttonColor,
+                                          fontWeight: FontWeight.w400),
+                                    ),
+                                    value: e,
+                                  ))
+                              .toList(),
+                          onChanged: (value) {
+                            controller.selectedItem.value = value!;
+                          },
+
+                          icon: Icon(
+                            Icons.arrow_drop_down_rounded,
+                            color: Color.fromARGB(255, 219, 221, 222),
+                            size: 40,
+                          ),
+                          dropdownColor: GlobalColor.validColor,
+                          decoration: InputDecoration(
+                            hintText: 'Service Type',
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            hintStyle: TextStyle(
+                                height: 1,
+                                fontSize: 20,
+                                color: GlobalColor.buttonColor),
+                          ),
                         ),
                       ),
                     ),
                   ),
-                  InkWell(
-                    onTap: () => {controller.getImage(ImageSource.camera)},
-                    child: Container(
-                      height: 40,
-                      width: 100,
-                      decoration: BoxDecoration(
-                        color: GlobalColor.mainColor,
-                        borderRadius: BorderRadius.circular(6),
-                      ),
-                      child: Center(
-                        child: Text(
-                          'Camera',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 17),
+                  SizedBox(
+                    height: 12,
+                  ),
+                  SizedBox(
+                    width: 360,
+                    child: Center(
+                      child: Container(
+                        child: TextFormField(
+                          controller: controller.descriptionController,
+                          maxLines: 2,
+                          onChanged: (value) {},
+                          style: TextStyle(fontSize: 23),
+                          decoration: InputDecoration(
+                            hintText: 'Describe your problem',
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            hintStyle: TextStyle(
+                                height: 1,
+                                fontSize: 20,
+                                color: GlobalColor.buttonColor),
+                          ),
+                          keyboardType: TextInputType.name,
                         ),
                       ),
                     ),
+                  ),
+                  SizedBox(
+                    height: 12,
+                  ),
+                  SizedBox(
+                    width: 360,
+                    child: Center(
+                      child: Container(
+                        child: InkWell(
+                          onTap: () {
+                            controller.getImage(ImageSource.camera);
+                          },
+                          child: Obx(
+                            () => Container(
+                              alignment: Alignment.center,
+                              height: 55,
+                              width: 360,
+                              decoration: BoxDecoration(
+                                color: GlobalColor.textColor,
+                                borderRadius: BorderRadius.circular(6),
+                              ),
+                              child: Text(
+                                controller.selectedImageSize.value,
+                                style: TextStyle(
+                                    color: GlobalColor.white,
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 23),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 240,
+                  ),
+                  InkWell(
+                    onTap: () async {
+                      await controller.sendRequest();
+                    },
+                    child: Container(
+                      alignment: Alignment.center,
+                      height: 55,
+                      width: 250,
+                      decoration: BoxDecoration(
+                        color: GlobalColor.greenColor,
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                      child: Text(
+                        'Send',
+                        style: TextStyle(
+                            color: GlobalColor.white,
+                            fontWeight: FontWeight.w400,
+                            fontSize: 23),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 12,
                   ),
                 ],
               ),
-              SizedBox(
-                height: 100,
-              ),
-              Container(
-                  margin: EdgeInsets.only(left: 40, right: 40),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.green[300]),
-                    child: Text(
-                      "Done",
-                      style: TextStyle(fontSize: 20, color: Colors.white),
-                    ),
-                    onPressed: () {
-                      print(controller.selectedImagePath.value.isImageFileName);
-                    },
-                  )),
-            ],
+            ),
           ),
-        ),
+        ]),
       ),
     );
   }

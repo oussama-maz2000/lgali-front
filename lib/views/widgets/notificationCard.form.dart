@@ -9,10 +9,10 @@ class CardNotification extends StatelessWidget {
     return Container(
       child: InkWell(
         onTap: () {
-          print('hello world');
+
         },
         child: Card(
-          elevation: 0,
+          elevation: 2,
           child: Column(children: [
             ListTile(
               leading: CircleAvatar(
@@ -22,11 +22,11 @@ class CardNotification extends StatelessWidget {
               title: Text(
                 'Oussama Mazeghrane',
                 style: TextStyle(
-                    fontSize: 17,
+                    fontSize: 20,
                     fontFamily: 'Nunito',
                     color: GlobalColor.mainColor),
               ),
-              trailing: Text('doctor'),
+              trailing: Text('doctor',style: TextStyle(fontSize: 15),),
               subtitle: Text('accepted your service at 13:10'),
             ),
           ]),
