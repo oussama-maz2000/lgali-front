@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'splash/splash.view.dart';
+import 'screens/splash.view.dart';
 
 
 
@@ -16,6 +16,6 @@ Future<void> main() async {
 
   runApp(GetMaterialApp(
     debugShowCheckedModeBanner: false,
-    home: SplashView(),
+    home: SplashScreen(),
   ));
 }
