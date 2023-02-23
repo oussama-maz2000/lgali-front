@@ -1,46 +1,37 @@
 import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
-import 'package:line_icons/line_icons.dart';
+
+import 'package:lgali/model/storage.dart';
 import 'package:selectable_container/selectable_container.dart';
 
 import '../utils/global.color.dart';
 
 class StepperController extends GetxController {
+  final data = Get.put(Data());
+
+  final _services = ["doctor", "farmer", "pharmacies", "painter"];
+
+  TextEditingController userFirstNameController = TextEditingController();
+  TextEditingController userLastNameController = TextEditingController();
+  TextEditingController userPhoneController = TextEditingController();
+  TextEditingController companyNameController = TextEditingController();
+  TextEditingController companyPhoneController = TextEditingController();
+  TextEditingController companyDescriptionController = TextEditingController();
+
   var currentStep = 0.obs;
-  var complete = false.obs;
+  var proController = false.obs;
+  var prtController = true.obs;
+  var firstNameValid = false.obs;
+  var lastNameValid = false.obs;
+  var phoneValid = false.obs;
+  var companyNameValid = false.obs;
+  var companyPhoneValid = false.obs;
+  var selected = ''.obs;
 
-  void onNext() {
-    ((currentStep.value + 1) != 5)
-        ? currentStep.value += 1
-        : complete.value = true;
-  }
 
-  void onPrevious() {
-    if (currentStep.value > 0) {
-      currentStep.value -= 1;
-    }
-  }
 
-  List<Step> buildStep() {
-    return [
-      Step(
-          title: Text(
-            "Profil",
-            style: TextStyle(color: GlobalColor.buttonColor),
-          ),
-          content: register(),
-          isActive: currentStep.value >= 0),
-      Step(
-          title: Text(
-            "Type",
-            style: TextStyle(color: GlobalColor.buttonColor),
-          ),
-          content: profilType(),
-          isActive: currentStep.value >= 1),
-    ];
-  }
-
-  Widget register() {
+  Widget userInfo() {
     return Container(
         child: Column(
       children: [
@@ -49,19 +40,18 @@ class StepperController extends GetxController {
           child: Text(
             "User Profil",
             style: TextStyle(
-              fontSize: 35,
+              fontSize: 30,
               color: GlobalColor.buttonColor,
               fontWeight: FontWeight.w700,
             ),
           ),
         ),
         SizedBox(height: 10),
-        Text(
-          "Please enter your information to validate your profile",
-          style: TextStyle(
-            fontSize: 16,
-            color: GlobalColor.textColor,
-            fontWeight: FontWeight.w300,
+        Container(
+          margin: EdgeInsets.only(left: 30, right: 30),
+          child: Text(
+            "Please enter your information to validate your profile",
+            style: TextStyle(fontSize: 18, color: GlobalColor.textColor),
           ),
         ),
         SizedBox(height: 20),
@@ -79,18 +69,17 @@ class StepperController extends GetxController {
                 child: Center(
                   child: Container(
                     child: TextFormField(
-                      //controller: controller.firstNameController,
+                      controller: userFirstNameController,
                       onChanged: (value) {
                         if (value.length > 3) {
-                          //controller.fNameValid.value = true;
+                          firstNameValid.value = true;
                         } else {
-                          //controller.fNameValid.value = false;
+                          firstNameValid.value = false;
                         }
                       },
                       style: TextStyle(
                         fontSize: 23,
                       ),
-                      autofocus: true,
                       decoration: InputDecoration(
                         hintText: 'First Name',
                         border: OutlineInputBorder(
@@ -113,16 +102,15 @@ class StepperController extends GetxController {
                 child: Center(
                   child: Container(
                     child: TextFormField(
-                      //controller: controller.lastNameController,
+                      controller: userLastNameController,
                       onChanged: (value) {
                         if (value.length > 3) {
-                          //controller.lNameValid.value = true;
+                          lastNameValid.value = true;
                         } else {
-                          //controller.lNameValid.value = false;
+                          lastNameValid.value = false;
                         }
                       },
                       style: TextStyle(fontSize: 23),
-                      autofocus: true,
                       decoration: InputDecoration(
                         hintText: 'Last Name',
                         border: OutlineInputBorder(
@@ -145,20 +133,19 @@ class StepperController extends GetxController {
                 child: Center(
                   child: Container(
                     child: TextFormField(
-                      //controller: controller.phoneController,
+                      controller: userPhoneController,
                       onChanged: (value) {
                         if (value.length == 10) {
                           if (value.startsWith('07') ||
                               value.startsWith('05') ||
                               value.startsWith('06')) {
-                            //controller.phoneIsValid.value = true;
+                            phoneValid.value = true;
                           }
                         } else {
-                          //controller.phoneIsValid.value = false;
+                          phoneValid.value = false;
                         }
                       },
                       style: TextStyle(fontSize: 23),
-                      autofocus: true,
                       decoration: InputDecoration(
                         hintText: 'Phone Number',
                         suffix: Text('+213'),
@@ -170,7 +157,7 @@ class StepperController extends GetxController {
                             fontSize: 20,
                             color: GlobalColor.buttonColor),
                       ),
-                      keyboardType: TextInputType.name,
+                      keyboardType: TextInputType.number,
                     ),
                   ),
                 ),
@@ -185,7 +172,7 @@ class StepperController extends GetxController {
     ));
   }
 
-  Widget profilType() {
+  Widget userType() {
     return Container(
         child: Column(children: [
       SizedBox(
@@ -200,21 +187,23 @@ class StepperController extends GetxController {
             color: GlobalColor.buttonColor),
       )),
       SizedBox(
-        height: 6,
+        height: 4,
       ),
       Container(
           margin: EdgeInsets.only(left: 25),
           child: Padding(
             padding: const EdgeInsets.all(15.0),
             child: Text(
-              'Choose the type of your account, be careful to change it impossible',
+              'Choose the type of your account, if you have company/profession select professional',
               style: TextStyle(fontSize: 18, color: GlobalColor.textColor),
             ),
           )),
       SelectableContainer(
-          selected: false,
+          selected: prtController.value,
           onValueChanged: (value) {
-            print('clicked');
+            prtController.value = true;
+            proController.value = false;
+            data.storage.write('userType', 'prt');
           },
           child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Card(
@@ -268,9 +257,12 @@ class StepperController extends GetxController {
         height: 20,
       ),
       SelectableContainer(
-          selected: true,
+          selected: proController.value,
           onValueChanged: (value) {
-            print('clicked');
+            proController.value = true;
+            prtController.value = false;
+
+            data.storage.write('userType', 'pro');
           },
           child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Card(
@@ -321,5 +313,279 @@ class StepperController extends GetxController {
             )
           ])),
     ]));
+  }
+
+  Widget companyInfo() {
+    return Container(
+        child: Column(
+      children: [
+        Container(
+          alignment: Alignment.center,
+          child: Text(
+            "Company Profil",
+            style: TextStyle(
+              fontSize: 30,
+              color: GlobalColor.buttonColor,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        ),
+        SizedBox(height: 10),
+        Container(
+          margin: EdgeInsets.only(left: 35, right: 30),
+          child: Text(
+            "Please enter your information to "
+            "validate your company",
+            style: TextStyle(
+              fontSize: 18,
+              color: GlobalColor.textColor,
+            ),
+          ),
+        ),
+        SizedBox(height: 20),
+        Card(
+          elevation: 0,
+          color: GlobalColor.cardColor,
+          child: Column(
+            children: [
+              SizedBox(
+                height: 15,
+                width: double.infinity,
+              ),
+              SizedBox(
+                width: 360,
+                child: Center(
+                  child: Container(
+                    child: TextFormField(
+                      controller: companyNameController,
+                      onChanged: (value) {
+                        if (value.length > 3) {
+                          companyNameValid.value = true;
+                        } else {
+                          companyNameValid.value = false;
+                        }
+                      },
+                      style: TextStyle(
+                        fontSize: 23,
+                      ),
+                      decoration: InputDecoration(
+                        hintText: 'Company Name',
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10)),
+                        hintStyle: TextStyle(
+                            height: 1,
+                            fontSize: 20,
+                            color: GlobalColor.buttonColor),
+                      ),
+                      keyboardType: TextInputType.name,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 12,
+              ),
+              SizedBox(
+                width: 360,
+                child: Center(
+                  child: Container(
+                    child: TextFormField(
+                      controller: companyPhoneController,
+                      onChanged: (value) {
+                        if (value.length == 10) {
+                          if (value.startsWith('07') ||
+                              value.startsWith('05') ||
+                              value.startsWith('06')) {
+                            companyPhoneValid.value = true;
+                          }
+                        } else {
+                          companyPhoneValid.value = false;
+                        }
+                      },
+                      style: TextStyle(fontSize: 23),
+                      decoration: InputDecoration(
+                        hintText: 'Company Phone Number',
+                        suffix: Text('+213'),
+                        suffixStyle: TextStyle(fontSize: 17),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10)),
+                        hintStyle: TextStyle(
+                            height: 1,
+                            fontSize: 20,
+                            color: GlobalColor.buttonColor),
+                      ),
+                      keyboardType: TextInputType.number,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    ));
+  }
+
+  Widget companyTypeService() {
+    return Container(
+      child: Column(
+        children: [
+          Container(
+              child: Text(
+            'Company type',
+            style: TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.w700,
+                color: GlobalColor.buttonColor),
+          )),
+          SizedBox(
+            height: 30,
+          ),
+          DropdownButtonFormField(
+            elevation: 0,
+            items: _services
+                .map((e) => DropdownMenuItem(
+                      child: Text(
+                        e,
+                        style: TextStyle(
+                            fontSize: 23,
+                            color: GlobalColor.buttonColor,
+                            fontWeight: FontWeight.w400),
+                      ),
+                      value: e,
+                    ))
+                .toList(),
+            onChanged: (value) {
+              selected.value = value!;
+            },
+            icon: Icon(
+              Icons.arrow_drop_down_rounded,
+              color: Color.fromARGB(255, 219, 221, 222),
+              size: 40,
+            ),
+            dropdownColor: GlobalColor.cardColor,
+            decoration: InputDecoration(
+              hintText: 'Service Type',
+              border:
+                  OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+              hintStyle: TextStyle(
+                  height: 1, fontSize: 20, color: GlobalColor.buttonColor),
+            ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Container(
+            child: TextFormField(
+              controller: companyDescriptionController,
+              maxLines: 2,
+              onChanged: (value) {},
+              style: TextStyle(
+                fontSize: 23,
+              ),
+              decoration: InputDecoration(
+                hintText: 'Describe your company',
+                border:
+                    OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                hintStyle: TextStyle(
+                    height: 1, fontSize: 20, color: GlobalColor.buttonColor),
+              ),
+              keyboardType: TextInputType.name,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget descriptionApp() {
+    return Container(
+      child: Column(
+        children: [
+          SizedBox(
+            height: 40,
+          ),
+          Text(
+            'App description',
+            style: TextStyle(
+                color: GlobalColor.mainColor,
+                fontSize: 30,
+                fontWeight: FontWeight.w500),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Container(
+            padding: EdgeInsets.all(8),
+            child: Text(
+              "lgali it's simple application that allow you to subscribe as simple user or like pro user which means"
+              " that if you are simple user you will just discover the service that you want and send request if you need "
+              "something , and with pro user you will offer your service in our application and the users will find you "
+              "plus of that will contact you if they need you ",
+              style: TextStyle(fontSize: 20, color: GlobalColor.textColor),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  bool isCompletedStep() {
+    if (currentStep.value == 0) {
+      if (!firstNameValid.value || !lastNameValid.value || !phoneValid.value) {
+        return false;
+      } else if (firstNameValid.value &&
+          lastNameValid.value &&
+          phoneValid.value) {
+        data.storage.write('userFirstName', userFirstNameController.value.text);
+        data.storage.write('userLastName', userLastNameController.value.text);
+        data.storage.write("userPhone", userPhoneController.value.text);
+        return true;
+      }
+    }
+    if (currentStep.value == 1) {
+      print(data.storage.read('userType'));
+      if (data.storage.read('userType') == 'prt') {
+        currentStep.value = 4;
+      }else
+      return true;
+    }
+    if (currentStep.value == 2) {
+      if (!companyNameValid.value || !companyPhoneValid.value) {
+        return false;
+      } else if (companyNameValid.value &&
+          companyPhoneValid.value &&
+          data.storage.read('userType') == 'pro') {
+        data.storage.write('companyName', companyNameController.value.text);
+        data.storage.write('companyPhone', companyPhoneController.value.text);
+        return true;
+      }
+    }
+    if (currentStep.value == 3) {
+      if (selected.value == '' || selected.value.isEmpty) {
+        return false;
+      } else if (selected.value.isNotEmpty &&
+          data.storage.read('userType') == 'pro') {
+        data.storage.write('companyType', selected.value);
+        data.storage.write(
+            'companyDescription', companyDescriptionController.value.text);
+
+        return true;
+      }
+    }
+    if (currentStep == 4) {
+      print(data.storage.read('userFirstName'));
+      print(data.storage.read('userLastName'));
+      print(data.storage.read('userPhone'));
+      print(data.storage.read('userType'));
+      if (data.storage.read('companyName') == '') {
+        print('true');
+        print(data.storage.read('companyName'));
+        print(data.storage.read('companyPhone'));
+        print(data.storage.read('companyType'));
+        print(data.storage.read('companyDescription'));
+      }
+    }
+    return false;
   }
 }
