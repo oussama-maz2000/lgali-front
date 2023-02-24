@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:lgali/screens/serviceCompany.view.dart';
+
 import 'package:line_icons/line_icons.dart';
 
 import '../screens/home.view.dart';
@@ -17,7 +18,6 @@ class DashBordController extends GetxController {
 
   @override
   void onInit() {
-    // TODO: implement onInit
     super.onInit();
     bottomBar();
   }
@@ -30,7 +30,7 @@ class DashBordController extends GetxController {
         RequestScreen(),
         ServiceCompanyScreen()
       ];
-      iconList.value=[
+      iconList.value = [
         bottomNavigationBarItem(
           icon: LineIcons.home,
           label: 'Home',
@@ -52,15 +52,13 @@ class DashBordController extends GetxController {
           label: 'Settings',
         ),
       ];
-    }
-    else if(data.storage.read('usertype')=='particular'){
+    } else if (data.storage.read('usertype') == 'particular') {
       widgetsList.value = [
         HomeScreen(),
         NotificationScreen(),
         RequestScreen(),
-
       ];
-      iconList.value=[
+      iconList.value = [
         bottomNavigationBarItem(
           icon: LineIcons.home,
           label: 'Home',
@@ -73,7 +71,6 @@ class DashBordController extends GetxController {
           icon: LineIcons.plusCircle,
           label: 'Send',
         ),
-
         bottomNavigationBarItem(
           icon: LineIcons.cogs,
           label: 'Settings',
@@ -84,7 +81,6 @@ class DashBordController extends GetxController {
 
   void changeTabIndex(int index) {
     tabIndex.value = index;
-
   }
 
   bottomNavigationBarItem({IconData? icon, String? label}) {

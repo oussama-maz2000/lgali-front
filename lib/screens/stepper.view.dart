@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lgali/controllers/stepper.controller.dart';
+import 'package:lgali/screens/request.view.dart';
 import 'package:lgali/utils/global.color.dart';
 import 'package:line_icons/line_icons.dart';
 
@@ -23,15 +24,15 @@ class StepperScreen extends StatelessWidget {
             "Type",
             style: TextStyle(color: GlobalColor.buttonColor),
           ),
-          content:controller. userType(),
+          content: controller.userType(),
           isActive: controller.currentStep.value >= 1),
       Step(
           title: Text(
             "Company",
             style: TextStyle(color: GlobalColor.buttonColor),
           ),
-          content:controller. companyInfo(),
-          isActive:controller. currentStep.value >= 2),
+          content: controller.companyInfo(),
+          isActive: controller.currentStep.value >= 2),
       Step(
           title: Text(
             "Service",
@@ -48,6 +49,7 @@ class StepperScreen extends StatelessWidget {
           isActive: controller.currentStep.value >= 4),
     ];
   }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -85,21 +87,25 @@ class StepperScreen extends StatelessWidget {
                         child: RawMaterialButton(
                           splashColor: GlobalColor.white,
                           onPressed: () {
-                            bool isCompletedStep = controller.isCompletedStep();
                             print(controller.currentStep.value);
-                            if (controller.currentStep.value ==
+                            if (controller.currentStep.value <
+                                buildStep().length - 1) {
+                              if (controller.isCompletedStep() == true) {
+                                controller.currentStep.value++;
+                              } else if (controller.isCompletedStep() ==
+                                  false) {
+                                Get.snackbar(
+                                    "Error", "Invalid form , try again please",
+                                    backgroundColor: Colors.redAccent,
+                                    colorText: Colors.white,
+                                    margin: EdgeInsets.only(
+                                        bottom: 4, left: 4, right: 4),
+                                    snackPosition: SnackPosition.BOTTOM);
+                              }
+                            } else if (controller.currentStep.value ==
                                 buildStep().length - 1) {
                               print('completed');
-                            } else if (isCompletedStep == true) {
-                              controller.currentStep.value++;
-                            } else {
-                              Get.snackbar(
-                                  "Error", "Invalid form , try again please",
-                                  backgroundColor: Colors.redAccent,
-                                  colorText: Colors.white,
-                                  margin: EdgeInsets.only(
-                                      bottom: 4, left: 4, right: 4),
-                                  snackPosition: SnackPosition.BOTTOM);
+                              Get.to(() => RequestScreen());
                             }
                           },
                           elevation: 2.0,

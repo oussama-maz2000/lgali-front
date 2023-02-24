@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 
 import 'package:lgali/model/storage.dart';
 import 'package:selectable_container/selectable_container.dart';
@@ -28,8 +29,6 @@ class StepperController extends GetxController {
   var companyNameValid = false.obs;
   var companyPhoneValid = false.obs;
   var selected = ''.obs;
-
-
 
   Widget userInfo() {
     return Container(
@@ -203,7 +202,7 @@ class StepperController extends GetxController {
           onValueChanged: (value) {
             prtController.value = true;
             proController.value = false;
-            data.storage.write('userType', 'prt');
+            //  data.storage.write('userType', 'prt');
           },
           child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Card(
@@ -262,7 +261,7 @@ class StepperController extends GetxController {
             proController.value = true;
             prtController.value = false;
 
-            data.storage.write('userType', 'pro');
+            //data.storage.write('userType', 'pro');
           },
           child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Card(
@@ -532,59 +531,52 @@ class StepperController extends GetxController {
 
   bool isCompletedStep() {
     if (currentStep.value == 0) {
-      if (!firstNameValid.value || !lastNameValid.value || !phoneValid.value) {
-        return false;
-      } else if (firstNameValid.value &&
-          lastNameValid.value &&
-          phoneValid.value) {
-        data.storage.write('userFirstName', userFirstNameController.value.text);
-        data.storage.write('userLastName', userLastNameController.value.text);
-        data.storage.write("userPhone", userPhoneController.value.text);
+      if (firstNameValid.value && lastNameValid.value && phoneValid.value)
         return true;
-      }
+      else
+        return false;
     }
     if (currentStep.value == 1) {
-      print(data.storage.read('userType'));
-      if (data.storage.read('userType') == 'prt') {
-        currentStep.value = 4;
-      }else
-      return true;
-    }
-    if (currentStep.value == 2) {
-      if (!companyNameValid.value || !companyPhoneValid.value) {
-        return false;
-      } else if (companyNameValid.value &&
-          companyPhoneValid.value &&
-          data.storage.read('userType') == 'pro') {
-        data.storage.write('companyName', companyNameController.value.text);
-        data.storage.write('companyPhone', companyPhoneController.value.text);
+      if (prtController.value) {
+        currentStep.value = 3;
+        return true;
+      } else {
         return true;
       }
     }
-    if (currentStep.value == 3) {
-      if (selected.value == '' || selected.value.isEmpty) {
+    if (currentStep.value == 2) {
+      if (companyNameValid.value &&
+          companyPhoneValid.value &&
+          proController.value)
+        return true;
+      else
         return false;
-      } else if (selected.value.isNotEmpty &&
-          data.storage.read('userType') == 'pro') {
+    }
+    if (currentStep.value == 3) {
+      if (selected.value.isNotEmpty && proController.value)
+        return true;
+      else
+        return false;
+    }
+    if (currentStep >= 4) {
+      if (prtController.value) {
+        data.storage.write('userFirstName', userFirstNameController.value);
+        data.storage.write('userLastName', userLastNameController.value);
+        data.storage.write('userPhone', userPhoneController.value);
+        data.storage.write('userType', 'particular');
+      } else if (proController.value) {
+        data.storage.write('userFirstName', userFirstNameController.value.text);
+        data.storage.write('userLastName', userLastNameController.value.text);
+        data.storage.write('userPhone', userPhoneController.value.text);
+        data.storage.write('userType', 'professional');
+        data.storage.write('companyName', companyNameController.value.text);
+        data.storage.write('companyPhone', companyPhoneController.value.text);
         data.storage.write('companyType', selected.value);
         data.storage.write(
             'companyDescription', companyDescriptionController.value.text);
+      }
 
-        return true;
-      }
-    }
-    if (currentStep == 4) {
-      print(data.storage.read('userFirstName'));
-      print(data.storage.read('userLastName'));
-      print(data.storage.read('userPhone'));
-      print(data.storage.read('userType'));
-      if (data.storage.read('companyName') == '') {
-        print('true');
-        print(data.storage.read('companyName'));
-        print(data.storage.read('companyPhone'));
-        print(data.storage.read('companyType'));
-        print(data.storage.read('companyDescription'));
-      }
+      return true;
     }
     return false;
   }
