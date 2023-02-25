@@ -5,8 +5,6 @@ import 'package:lgali/screens/notification.view.dart';
 import 'package:lgali/utils/global.color.dart';
 
 class CardCustom extends StatelessWidget {
-  const CardCustom({super.key});
-
   @override
   Widget build(BuildContext context) {
     return InkWell(

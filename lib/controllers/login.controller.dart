@@ -1,19 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 import 'package:lgali/screens/dashbord.view.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-
-import '../model/storage.dart';
 import '../utils/global.color.dart';
 
 class LoginController extends GetxController {
-  final data = Get.put(Data());
-
   final supabase = Supabase.instance.client;
-
+  var box = Hive.box('user');
   late TextEditingController emailController, passwordController;
   var emailValid;
-
   var passwordValid;
 
   String? session;
@@ -38,21 +34,14 @@ class LoginController extends GetxController {
       session = supabase.auth.currentSession?.accessToken;
       session == null ? isAuthenticated = false : isAuthenticated = true;
 
-      print('_______Session_______');
-      print(session);
-      data.storage.write('session', session);
+      print('_______Data User_______');
+      box.putAll({
+        'id': user?.id,
+        'email': user?.email,
+        'session': session,
+        'isAuth': isAuthenticated
+      });
 
-      print('_______UserID_______');
-      print(user?.id);
-      data.storage.write("id", user?.id);
-
-      print('_______UserEmail_______');
-      print(user?.email);
-      data.storage.write("email", user?.email);
-
-      print('_______IsAuthenticated_______');
-      print(isAuthenticated);
-      data.storage.write("isAuth", isAuthenticated);
       Get.snackbar("Logged in", "Welcome in your account ",
           backgroundColor: GlobalColor.greenColor,
           colorText: Colors.white,

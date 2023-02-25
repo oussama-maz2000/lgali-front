@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
-import 'package:get_storage/get_storage.dart';
+
+import 'package:hive_flutter/adapters.dart';
+
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'screens/splash.view.dart';
 
-
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await GetStorage.init();
+  await Hive.initFlutter();
+  await Hive.openBox('user');
   await Supabase.initialize(
       url: "https://gihgpgzukilittqwsqxv.supabase.co",
       anonKey:
@@ -17,5 +19,6 @@ Future<void> main() async {
   runApp(GetMaterialApp(
     debugShowCheckedModeBanner: false,
     home: SplashScreen(),
+    builder: EasyLoading.init(),
   ));
 }

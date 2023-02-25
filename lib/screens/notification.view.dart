@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
-
-import 'package:get/get.dart';
-
-import '../controllers/notification.controller.dart';
 import '../utils/global.color.dart';
 import '../utils/notificationCard.form.dart';
 
-
-class NotificationScreen extends GetView<NotificationController> {
+class NotificationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(

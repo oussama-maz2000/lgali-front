@@ -1,15 +1,19 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
-
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
-
-import 'package:lgali/model/storage.dart';
+import 'package:hive/hive.dart';
+import 'package:lgali/screens/profil.view.dart';
 import 'package:selectable_container/selectable_container.dart';
+
+import 'package:lgali/model/repository/profile_repository.dart';
 
 import '../utils/global.color.dart';
 
 class StepperController extends GetxController {
-  final data = Get.put(Data());
+  var box = Hive.box('user');
+  final _repository = Get.put(ProfileRepository());
 
   final _services = ["doctor", "farmer", "pharmacies", "painter"];
 
@@ -29,6 +33,7 @@ class StepperController extends GetxController {
   var companyNameValid = false.obs;
   var companyPhoneValid = false.obs;
   var selected = ''.obs;
+  var result = [].obs;
 
   Widget userInfo() {
     return Container(
@@ -524,6 +529,58 @@ class StepperController extends GetxController {
               style: TextStyle(fontSize: 20, color: GlobalColor.textColor),
             ),
           ),
+          SizedBox(
+            height: 30,
+          ),
+          InkWell(
+            onTap: () async => {
+              box.putAll({
+                'firstName': userFirstNameController.value.text,
+                'lastName': userLastNameController.value.text,
+                'phone': userPhoneController.value.text,
+              }),
+              if (prtController.value)
+                {
+                  box.put('type', 'particular'),
+                }
+              else if (proController.value)
+                {
+                  box.putAll({
+                    'type': 'professional',
+                    'companyName': companyNameController.value.text,
+                    'companyPhone': companyPhoneController.value.text,
+                    'companyService': selected.value,
+                    'companyDescription':
+                        companyDescriptionController.value.text
+                  }),
+                },
+              result.add(_repository.createUser(
+                  userFirstNameController.value.text,
+                  userLastNameController.value.text,
+                  'email',
+                  userPhoneController.value.text,
+                  'particular')),
+              result.isEmpty
+                  ? EasyLoading.show(status: 'wait please...')
+                  : {Get.to(() => ProfilScreen())},
+            },
+            child: Container(
+              alignment: Alignment.center,
+              height: 55,
+              width: 280,
+              decoration: BoxDecoration(
+                color: GlobalColor.buttonColor,
+                borderRadius: BorderRadius.circular(6),
+              ),
+              child: Text(
+                'Validate',
+                style: TextStyle(
+                    color: GlobalColor.white,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 23),
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -531,52 +588,44 @@ class StepperController extends GetxController {
 
   bool isCompletedStep() {
     if (currentStep.value == 0) {
-      if (firstNameValid.value && lastNameValid.value && phoneValid.value)
+      if (firstNameValid.value && lastNameValid.value && phoneValid.value) {
+        print('validate');
+        print(currentStep.value);
         return true;
-      else
+      } else
         return false;
     }
     if (currentStep.value == 1) {
       if (prtController.value) {
+        print('validate');
+        print(currentStep.value);
         currentStep.value = 3;
         return true;
-      } else {
+      } else if (proController.value) {
         return true;
       }
+      return false;
     }
     if (currentStep.value == 2) {
       if (companyNameValid.value &&
           companyPhoneValid.value &&
-          proController.value)
+          proController.value) {
+        print('validate');
+        print(currentStep.value);
         return true;
-      else
+      } else
         return false;
     }
     if (currentStep.value == 3) {
-      if (selected.value.isNotEmpty && proController.value)
+      if (selected.value.isNotEmpty && proController.value) {
+        print('validate');
+        print(currentStep.value);
         return true;
-      else
+      } else
         return false;
     }
-    if (currentStep >= 4) {
-      if (prtController.value) {
-        data.storage.write('userFirstName', userFirstNameController.value);
-        data.storage.write('userLastName', userLastNameController.value);
-        data.storage.write('userPhone', userPhoneController.value);
-        data.storage.write('userType', 'particular');
-      } else if (proController.value) {
-        data.storage.write('userFirstName', userFirstNameController.value.text);
-        data.storage.write('userLastName', userLastNameController.value.text);
-        data.storage.write('userPhone', userPhoneController.value.text);
-        data.storage.write('userType', 'professional');
-        data.storage.write('companyName', companyNameController.value.text);
-        data.storage.write('companyPhone', companyPhoneController.value.text);
-        data.storage.write('companyType', selected.value);
-        data.storage.write(
-            'companyDescription', companyDescriptionController.value.text);
-      }
-
-      return true;
+    if (currentStep < 4) {
+      return false;
     }
     return false;
   }

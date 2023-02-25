@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lgali/model/storage.dart';
-import 'package:lgali/screens/type.view.dart';
-import 'package:lgali/screens/registration.view.dart';
+import 'package:hive/hive.dart';
+
+import 'package:lgali/screens/stepper.view.dart';
 
 import 'package:lgali/controllers/sing.controller.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -12,15 +12,15 @@ class OtpController extends GetxController {
   final supabase = Supabase.instance.client;
 
   // ----------Dependency Injection----------//
-  final data = Get.put(Data());
+
   final signController = Get.put(SignController());
+  var box = Hive.box('user');
 
   // ----------Variables----------//
   TextEditingController otpCode = TextEditingController();
   bool isAuthenticated = false;
   String? session;
   User? user;
-
 
   Future<void> verification() async {
     try {
@@ -32,23 +32,19 @@ class OtpController extends GetxController {
       user = response.user;
       session == null ? isAuthenticated = false : isAuthenticated = true;
 
-      print('_______Session_______');
-      print(session);
-      data.storage.write('session',session);
+      print('_______Data User_______');
+      box.putAll({
+        'id': user?.id,
+        'email': user?.email,
+        'session': session,
+        'isAuth': isAuthenticated
+      });
+      print(box.get('id'));
+      print(box.get('email'));
+      print(box.get('session'));
+      print(box.get('isAuth'));
 
-      print('_______UserID_______');
-      print(user?.id);
-      data.storage.write("id", user?.id);
-
-      print('_______UserEmail_______');
-      print(user?.email);
-      data.storage.write("email", user?.email);
-
-      print('_______IsAuthenticated_______');
-      print(isAuthenticated);
-      data.storage.write("isAuth",isAuthenticated );
-
-      Get.off(() => UserTypeScreen());
+      Get.off(() => StepperScreen());
     } catch (err) {
       Get.snackbar("Error", "Token has expired or is invalid",
           backgroundColor: Colors.redAccent,
@@ -57,6 +53,4 @@ class OtpController extends GetxController {
           snackPosition: SnackPosition.BOTTOM);
     }
   }
-
-
 }

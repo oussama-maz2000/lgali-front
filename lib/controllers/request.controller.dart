@@ -17,7 +17,6 @@ class RequestController extends GetxController {
 
   @override
   void onInit() {
-    // TODO: implement onInit
     super.onInit();
     selectedImageSize.value = 'Insert image';
   }
@@ -31,10 +30,11 @@ class RequestController extends GetxController {
             "MB";
   }
 
-  Future<void> sendRequest() async{
+  Future<void> sendRequest() async {
     print("called");
     if (pickedFile != null) {
-      Position position=await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+      Position position = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high);
       print(descriptionController.value.text);
       print(selectedItem.value);
       print(selectedImagePath.value);

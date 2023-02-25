@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lgali/controllers/stepper.controller.dart';
-import 'package:lgali/screens/request.view.dart';
+import 'package:lgali/screens/profil.view.dart';
 import 'package:lgali/utils/global.color.dart';
 import 'package:line_icons/line_icons.dart';
 
 final countList = List<int>.generate(5, (index) => index);
 
-class StepperScreen extends StatelessWidget {
+class StepperScreen extends StatefulWidget {
+  @override
+  State<StepperScreen> createState() => _StepperScreenState();
+}
+
+class _StepperScreenState extends State<StepperScreen> {
   final controller = Get.put(StepperController());
 
   List<Step> buildStep() {
@@ -87,25 +92,29 @@ class StepperScreen extends StatelessWidget {
                         child: RawMaterialButton(
                           splashColor: GlobalColor.white,
                           onPressed: () {
-                            print(controller.currentStep.value);
                             if (controller.currentStep.value <
-                                buildStep().length - 1) {
-                              if (controller.isCompletedStep() == true) {
-                                controller.currentStep.value++;
-                              } else if (controller.isCompletedStep() ==
-                                  false) {
-                                Get.snackbar(
-                                    "Error", "Invalid form , try again please",
-                                    backgroundColor: Colors.redAccent,
-                                    colorText: Colors.white,
-                                    margin: EdgeInsets.only(
-                                        bottom: 4, left: 4, right: 4),
-                                    snackPosition: SnackPosition.BOTTOM);
-                              }
-                            } else if (controller.currentStep.value ==
-                                buildStep().length - 1) {
-                              print('completed');
-                              Get.to(() => RequestScreen());
+                                    buildStep().length &&
+                                controller.isCompletedStep() == true) {
+                              controller.currentStep.value++;
+                            } else if (controller.isCompletedStep() == false &&
+                                controller.currentStep.value != 4) {
+                              Get.snackbar(
+                                  "Error", "Invalid form , try again please",
+                                  backgroundColor: Colors.redAccent,
+                                  colorText: Colors.white,
+                                  margin: EdgeInsets.only(
+                                      bottom: 4, left: 4, right: 4),
+                                  snackPosition: SnackPosition.BOTTOM);
+                            } else {
+                              controller.result.isEmpty
+                                  ? Get.snackbar("Cheking",
+                                      "Click in validate button to create your profile",
+                                      backgroundColor: GlobalColor.greenColor,
+                                      colorText: Colors.white,
+                                      margin: EdgeInsets.only(
+                                          bottom: 4, left: 4, right: 4),
+                                      snackPosition: SnackPosition.BOTTOM)
+                                  : null;
                             }
                           },
                           elevation: 2.0,

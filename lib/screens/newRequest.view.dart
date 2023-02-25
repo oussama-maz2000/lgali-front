@@ -1,16 +1,7 @@
-
-
-
-
-
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:line_icons/line_icons.dart';
-
 import '../controllers/request.controller.dart';
 import '../utils/global.color.dart';
 

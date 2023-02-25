@@ -1,29 +1,25 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:lgali/screens/serviceCompany.view.dart';
-
 import 'package:line_icons/line_icons.dart';
-
 import '../screens/home.view.dart';
-import '../model/storage.dart';
 import '../screens/notification.view.dart';
 import '../screens/request.view.dart';
 import '../utils/global.color.dart';
 
 class DashBordController extends GetxController {
-  final data = Get.put(Data());
   var tabIndex = 0.obs;
   var widgetsList = <Widget>[].obs;
   var iconList = <BottomNavigationBarItem>[].obs;
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
     bottomBar();
   }
 
   void bottomBar() {
-    if (data.storage.read('usertype') == 'professional') {
+    if ('professional' == 'professional') {
       widgetsList.value = [
         HomeScreen(),
         NotificationScreen(),
@@ -52,7 +48,7 @@ class DashBordController extends GetxController {
           label: 'Settings',
         ),
       ];
-    } else if (data.storage.read('usertype') == 'particular') {
+    } else if ('usertype' == 'particular') {
       widgetsList.value = [
         HomeScreen(),
         NotificationScreen(),
