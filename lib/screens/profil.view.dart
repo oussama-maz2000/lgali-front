@@ -51,7 +51,9 @@ class ProfilScreen extends StatelessWidget {
             ),
             SizedBox(height: 10),
             Column(
-              children: controller.displayInfo(),
+              children: controller.values.map((e) {
+                return CustomField(e.toString());
+              }).toList(),
             )
           ],
         ),
