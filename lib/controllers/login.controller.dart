@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
+import 'package:lgali/model/repository/profile_repository.dart';
 import 'package:lgali/screens/dashbord.view.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../utils/global.color.dart';
 
 class LoginController extends GetxController {
   final supabase = Supabase.instance.client;
+  final ProfileRepository _profileRepository = Get.put(ProfileRepository());
   var box = Hive.box('user');
+
   late TextEditingController emailController, passwordController;
   var emailValid;
   var passwordValid;
@@ -41,7 +44,7 @@ class LoginController extends GetxController {
         'session': session,
         'isAuth': isAuthenticated
       });
-
+      await _profileRepository.fetchUser();
       Get.snackbar("Logged in", "Welcome in your account ",
           backgroundColor: GlobalColor.greenColor,
           colorText: Colors.white,

@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lgali/controllers/login.controller.dart';
+import 'package:lgali/screens/login.view.dart';
 import 'package:lgali/screens/profil.view.dart';
 import 'package:lgali/screens/sign.view.dart';
 import 'package:lgali/screens/stepper.view.dart';
@@ -11,7 +13,7 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Timer(Duration(seconds: 3), () {
-      Get.to(() => ProfilScreen());
+      Get.to(() => SignScreen());
     });
     return Scaffold(
         backgroundColor: GlobalColor.mainColor,

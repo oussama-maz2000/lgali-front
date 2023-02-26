@@ -57,6 +57,13 @@ class ProfilScreen extends StatelessWidget {
             )
           ],
         ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            controller.signOut();
+          },
+          backgroundColor: GlobalColor.redColor,
+          child: const Icon(Icons.exit_to_app_rounded),
+        ),
       ),
     );
   }

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lgali/screens/sign.view.dart';
@@ -9,10 +8,8 @@ import '../controllers/otp.controller.dart';
 
 import '../utils/global.color.dart';
 
-
 class OtpScreen extends GetView<OtpController> {
   final _controller = Get.put(OtpController());
-
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +26,6 @@ class OtpScreen extends GetView<OtpController> {
                 child: RawMaterialButton(
                   onPressed: () {
                     Get.to(SignScreen());
-
                   },
                   elevation: 2.0,
                   fillColor: Colors.white,
@@ -92,27 +88,22 @@ class OtpScreen extends GetView<OtpController> {
                             child: Center(
                               child: Container(
                                   child: Pinput(
-                                    controller: controller.otpCode,
+                                controller: controller.otpCode,
                                 length: 6,
-
-
-                              )
-                              ),
+                              )),
                             ),
                           ),
                           SizedBox(
                             height: 8,
                           ),
                           InkWell(
-                            onTap: () => {
-                              controller.verification()
-                            },
+                            onTap: () => {controller.verification()},
                             child: Container(
                               alignment: Alignment.center,
                               height: 55,
                               width: 360,
                               decoration: BoxDecoration(
-                                color: GlobalColor.buttonColor,
+                                color: GlobalColor.black,
                                 borderRadius: BorderRadius.circular(6),
                               ),
                               child: Text(

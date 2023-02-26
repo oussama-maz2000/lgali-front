@@ -15,12 +15,6 @@ class ProfilController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    List<dynamic> response =
-        await supabase.from('users').select('*').eq('id', 2);
-    data = response[0];
-    data.forEach((key, value) {
-      values.add(value);
-    });
   }
 
   List<Widget> displayInfo() {

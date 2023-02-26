@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
+import 'package:lgali/screens/dashbord.view.dart';
 import 'package:lgali/screens/profil.view.dart';
 import 'package:selectable_container/selectable_container.dart';
 
@@ -542,6 +543,16 @@ class StepperController extends GetxController {
               if (prtController.value)
                 {
                   box.put('type', 'particular'),
+                  result.add(await _repository.createUser(
+                      box.get('id'),
+                      userFirstNameController.value.text,
+                      userLastNameController.value.text,
+                      box.get('email'),
+                      userPhoneController.value.text,
+                      'particular')),
+                  result.isEmpty
+                      ? EasyLoading.show(status: 'wait please...')
+                      : {Get.to(() => ProfilScreen())},
                 }
               else if (proController.value)
                 {
@@ -553,27 +564,32 @@ class StepperController extends GetxController {
                     'companyDescription':
                         companyDescriptionController.value.text
                   }),
+                  result.add(await _repository.createUserWithCompany(
+                      box.get('id'),
+                      userFirstNameController.value.text,
+                      userLastNameController.value.text,
+                      box.get('email'),
+                      userPhoneController.value.text,
+                      'professional',
+                      companyNameController.value.text,
+                      companyPhoneController.value.text,
+                      selected.value,
+                      companyDescriptionController.value.text)),
+                  result.isEmpty
+                      ? EasyLoading.show(status: 'wait please...')
+                      : {Get.to(() => DashBordScreen())},
                 },
-              result.add(_repository.createUser(
-                  userFirstNameController.value.text,
-                  userLastNameController.value.text,
-                  'email',
-                  userPhoneController.value.text,
-                  'particular')),
-              result.isEmpty
-                  ? EasyLoading.show(status: 'wait please...')
-                  : {Get.to(() => ProfilScreen())},
             },
             child: Container(
               alignment: Alignment.center,
               height: 55,
               width: 280,
               decoration: BoxDecoration(
-                color: GlobalColor.buttonColor,
+                color: GlobalColor.black,
                 borderRadius: BorderRadius.circular(6),
               ),
               child: Text(
-                'Validate',
+                'Create',
                 style: TextStyle(
                     color: GlobalColor.white,
                     fontWeight: FontWeight.w400,
