@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lgali/controllers/stepper.controller.dart';
-import 'package:lgali/screens/profil.view.dart';
 import 'package:lgali/utils/global.color.dart';
 import 'package:line_icons/line_icons.dart';
 

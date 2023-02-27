@@ -6,7 +6,6 @@ import '../controllers/sing.controller.dart';
 import '../utils/global.color.dart';
 import 'login.view.dart';
 
-
 class SignScreen extends GetView<SignController> {
   final _controller = Get.put(SignController());
 
@@ -14,25 +13,11 @@ class SignScreen extends GetView<SignController> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Color(0xFF0c1425),
         resizeToAvoidBottomInset: false,
         body: Container(
           child: Stack(
             children: [
-              Positioned(
-                left: 1,
-                right: 340,
-                height: 40,
-                top: 5,
-                child: RawMaterialButton(
-                  onPressed: () {
-                    print('go back');
-                  },
-                  elevation: 2.0,
-                  fillColor: Colors.white,
-                  child: Icon(LineIcons.arrowLeft, size: 25),
-                  shape: CircleBorder(),
-                ),
-              ),
               Positioned(
                 top: 35,
                 left: 133,
@@ -41,7 +26,7 @@ class SignScreen extends GetView<SignController> {
                 child: Icon(
                   LineIcons.userLock,
                   size: 90,
-                  color: Colors.black,
+                  color: GlobalColor.cardColor,
                 ),
               ),
               Positioned(
@@ -51,7 +36,7 @@ class SignScreen extends GetView<SignController> {
                 child: Text(
                   "Sign Up ",
                   style: TextStyle(
-                      color: Colors.black,
+                      color: GlobalColor.cardColor,
                       fontSize: 30,
                       fontWeight: FontWeight.w500),
                 ),
@@ -86,7 +71,6 @@ class SignScreen extends GetView<SignController> {
                                     }
                                   },
                                   style: TextStyle(fontSize: 23),
-
                                   decoration: InputDecoration(
                                       hintText: 'Email address',
                                       border: OutlineInputBorder(
@@ -118,7 +102,6 @@ class SignScreen extends GetView<SignController> {
                                     }
                                   },
                                   style: TextStyle(fontSize: 23),
-
                                   decoration: InputDecoration(
                                       hintText: 'Password',
                                       border: OutlineInputBorder(
@@ -137,10 +120,7 @@ class SignScreen extends GetView<SignController> {
                             height: 30,
                           ),
                           InkWell(
-                            onTap: () => {
-                             controller.isValid()
-
-                            },
+                            onTap: () => {controller.isValid()},
                             child: Container(
                               alignment: Alignment.center,
                               height: 55,

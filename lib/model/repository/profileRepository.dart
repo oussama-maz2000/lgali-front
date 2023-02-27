@@ -51,14 +51,40 @@ class ProfileRepository extends GetxController {
     return {user, company};
   }
 
-  Future<void> fetchUser() async {
+  Future<List<String>> fetchUser(String? userID) async {
     var data = new Map();
-    List<dynamic> response =
-        await supabase.from('users').select('*').eq('user_id', box.get('id'));
+    var company = new Map();
+    List<String> values = [];
+    List<dynamic> response = await supabase
+        .from('users')
+        .select(
+            'first_name,last_name,phone,type,email,companies(company_name,company_phone,company_service,company_description)')
+        .eq('user_id', '94a474e9-4597-42e6-8159-e1617ec3bfa8');
     data = response[0];
-    box.put('type', data['type']);
-    print(data);
+    data['companies'] == null ? null : company = data['companies'];
 
-    print(box.get('type'));
+    data.remove('companies');
+    data.forEach((key, value) {
+      values.add(value.toString());
+    });
+    company.forEach((key, value) {
+      values.add(value.toString());
+    });
+
+    await box.putAll({
+      'firstName': data['first_name'],
+      'lastName': data['last_name'],
+      'phone': data['phone'],
+      'type': data['type']
+    });
+    return values;
+  }
+
+  Future<List> fetchAllUsers() async {
+    List<dynamic> users = await supabase
+        .from('users')
+        .select('first_name,last_name,phone,type,email').eq('email', 'loulououssama2015@gmail.com');
+
+    return users;
   }
 }

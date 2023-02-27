@@ -20,21 +20,7 @@ class LoginScreen extends GetView<LoginController> {
         body: Container(
           child: Stack(
             children: [
-              Positioned(
-                left: 1,
-                right: 340,
-                height: 40,
-                top: 5,
-                child: RawMaterialButton(
-                  onPressed: () {
-                    print('go back');
-                  },
-                  elevation: 2.0,
-                  fillColor: Colors.white,
-                  child: Icon(LineIcons.arrowLeft, size: 25),
-                  shape: CircleBorder(),
-                ),
-              ),
+
               Positioned(
                 top: 35,
                 left: 130,

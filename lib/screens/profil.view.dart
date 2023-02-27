@@ -42,18 +42,39 @@ class ProfilScreen extends StatelessWidget {
               ],
             ),
             SizedBox(
-              height: 20,
+              height: 3,
             ),
             Container(
-              child: CircleAvatar(
-                  radius: 50,
-                  backgroundImage: AssetImage('assets/images/person.jpeg')),
-            ),
+                child: Icon(
+              Icons.person_sharp,
+              size: 70,
+              color: GlobalColor.buttonColor,
+            )),
             SizedBox(height: 10),
-            Column(
-              children: controller.values.map((e) {
-                return CustomField(e.toString());
-              }).toList(),
+            Obx(() {
+              if (controller.values.value.isEmpty)
+                return Center(
+                    child: SizedBox(
+                  width: 25,
+                  height: 25,
+                  child: CircularProgressIndicator(
+                    color: GlobalColor.buttonColor,
+                    strokeWidth: 3,
+                  ),
+                ));
+              else
+                return Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: controller.values.value
+                          .map((e) => CustomField(e))
+                          .toList(),
+                    ),
+                  ),
+                );
+            }),
+            SizedBox(
+              height: 20,
             )
           ],
         ),

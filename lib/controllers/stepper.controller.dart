@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
@@ -8,7 +6,7 @@ import 'package:lgali/screens/dashbord.view.dart';
 import 'package:lgali/screens/profil.view.dart';
 import 'package:selectable_container/selectable_container.dart';
 
-import 'package:lgali/model/repository/profile_repository.dart';
+import 'package:lgali/model/repository/profileRepository.dart';
 
 import '../utils/global.color.dart';
 
@@ -585,7 +583,7 @@ class StepperController extends GetxController {
               height: 55,
               width: 280,
               decoration: BoxDecoration(
-                color: GlobalColor.black,
+                color: GlobalColor.validColor,
                 borderRadius: BorderRadius.circular(6),
               ),
               child: Text(
@@ -640,9 +638,7 @@ class StepperController extends GetxController {
       } else
         return false;
     }
-    if (currentStep < 4) {
-      return false;
-    }
+
     return false;
   }
 }

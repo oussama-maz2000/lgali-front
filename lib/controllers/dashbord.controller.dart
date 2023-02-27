@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
-import 'package:lgali/model/repository/profile_repository.dart';
+import 'package:lgali/model/repository/profileRepository.dart';
 import 'package:lgali/screens/serviceCompany.view.dart';
 import 'package:line_icons/line_icons.dart';
 import '../screens/home.view.dart';
@@ -12,6 +12,7 @@ import '../utils/global.color.dart';
 class DashBordController extends GetxController {
   var box = Hive.box('user');
   final ProfileRepository _profileRepository = Get.put(ProfileRepository());
+
   var tabIndex = 0.obs;
   var widgetsList = <Widget>[].obs;
   var iconList = <BottomNavigationBarItem>[].obs;
@@ -19,6 +20,7 @@ class DashBordController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
+
     bottomBar();
   }
 

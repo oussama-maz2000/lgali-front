@@ -1,28 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lgali/screens/request.view.dart';
-
 import '../controllers/dashbord.controller.dart';
 import '../utils/global.color.dart';
-import 'home.view.dart';
-import 'notification.view.dart';
-
 
 class DashBordScreen extends GetView<DashBordController> {
   final controller = Get.put(DashBordController());
-
-  _bottomNavigationBarItem({IconData? icon, String? label}) {
-    return BottomNavigationBarItem(
-      icon: Icon(
-        icon,
-        color: GlobalColor.mainColor,
-        size: 35,
-      ),
-      label: label,
-    );
-  }
-
-  List<Widget> _widget = [HomeScreen(), NotificationScreen(), RequestScreen()];
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +12,7 @@ class DashBordScreen extends GetView<DashBordController> {
       child: Scaffold(
         body: Container(
           child: Obx(
-            ()=> IndexedStack(
+            () => IndexedStack(
               index: controller.tabIndex.value,
               children: controller.widgetsList,
             ),
@@ -41,8 +23,7 @@ class DashBordScreen extends GetView<DashBordController> {
               //unselectedItemColor: Colors.black,
               selectedItemColor: GlobalColor.textColor,
               onTap: (index) {
-                controller.tabIndex.value=index;
-
+                controller.tabIndex.value = index;
               },
               currentIndex: controller.tabIndex.value,
               showSelectedLabels: true,
