@@ -3,13 +3,21 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../utils/global.color.dart';
+import 'global.color.dart';
 
-class TestMap extends StatelessWidget {
-  List<String> medicalServicesList = ['doctor', 'pharmacy'];
+class DisplayCompany extends StatelessWidget {
+  List<String> medicalServicesList = [
+    'Doctor',
+    'Pharmacy',
+    'Veterinary',
+    'Nurse',
+    'Dentist',
+    'Psychologist'
+  ];
 
   late Map e;
-  TestMap(this.e);
+
+  DisplayCompany(this.e);
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +43,7 @@ class TestMap extends StatelessWidget {
                   radius: 35,
                   backgroundImage:
                       medicalServicesList.contains(e['company_service'])
-                          ? AssetImage('assets/images/drt.png')
+                          ? AssetImage('assets/images/dct.png')
                           : AssetImage('assets/images/pro.png'),
                 ),
               ),
