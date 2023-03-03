@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:lgali/screens/profil.view.dart';
-import 'package:lgali/screens/test.view.dart';
+import 'package:lgali/utils/display.view.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import '../controllers/home.controller.dart';
@@ -51,7 +51,6 @@ class HomeScreen extends StatelessWidget {
             controller.updateLocation();
           },
           enablePullDown: true,
-          enablePullUp: true,
           child: SingleChildScrollView(
             child: Column(
               children: [
@@ -96,7 +95,7 @@ class HomeScreen extends StatelessWidget {
                     return SingleChildScrollView(
                       child: Column(
                         children: controller.myList.value
-                            .map((e) => TestMap(e))
+                            .map((e) => DisplayCompany(e))
                             .toList(),
                       ),
                     );

@@ -8,7 +8,7 @@ import 'package:lgali/screens/login.view.dart';
 import 'package:lgali/screens/profil.view.dart';
 import 'package:lgali/screens/sign.view.dart';
 import 'package:lgali/screens/stepper.view.dart';
-import 'package:lgali/screens/test.view.dart';
+import 'package:lgali/utils/display.view.dart';
 import '../utils/global.color.dart';
 import 'dashbord.view.dart';
 
