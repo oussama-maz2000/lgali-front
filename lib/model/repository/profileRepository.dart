@@ -1,10 +1,16 @@
-import 'package:get/get_state_manager/get_state_manager.dart';
+import 'dart:async';
+import 'package:get/get.dart';
 import 'package:hive/hive.dart';
+import 'package:lgali/controllers/home.controller.dart';
+
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-class ProfileRepository extends GetxController {
-  final supabase = Supabase.instance.client;
+class ProfileRepository extends GetxService {
   var box = Hive.box('user');
+  final supabase = Supabase.instance.client;
+  StreamController<double> controller = StreamController<double>();
+  final companiesList = Rx([]);
+  var cluster = 0.obs;
 
   Future<dynamic> createUser(String user_id, String firstName, String lastName,
       String email, String phone, String type) async {
@@ -59,7 +65,7 @@ class ProfileRepository extends GetxController {
         .from('users')
         .select(
             'first_name,last_name,phone,type,email,companies(company_name,company_phone,company_service,company_description)')
-        .eq('user_id', '94a474e9-4597-42e6-8159-e1617ec3bfa8');
+        .eq('user_id', 'eac22d54-635b-48d8-943c-77465cd136e4');
     data = response[0];
     data['companies'] == null ? null : company = data['companies'];
 
@@ -80,11 +86,13 @@ class ProfileRepository extends GetxController {
     return values;
   }
 
-  Future<List> fetchAllUsers() async {
-    List<dynamic> users = await supabase
-        .from('users')
-        .select('first_name,last_name,phone,type,email').eq('email', 'loulououssama2015@gmail.com');
 
-    return users;
+
+  void updateLocation(latitude, longitude) async {
+    await supabase.from('userPlace').update({
+      "latitude": latitude,
+      'longitude': longitude,
+      'cluster': -1
+    }).eq('user_id', "48b1256c-0da0-4e34-a09c-d1dd5ae93fe0");
   }
 }
