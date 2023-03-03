@@ -9,8 +9,8 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 class OtpController extends GetxController {
   // ----------SupaBase----------//
-  final supabase = Supabase.instance.client;
 
+  final supabase = Supabase.instance.client;
   // ----------Dependency Injection----------//
 
   final signController = Get.put(SignController());

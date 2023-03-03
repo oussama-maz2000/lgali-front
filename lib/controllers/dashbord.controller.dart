@@ -25,7 +25,7 @@ class DashBordController extends GetxController {
   }
 
   void bottomBar() {
-    if (box.get('type') == 'professional') {
+    if ('professional' == 'professional') {
       widgetsList.value = [
         HomeScreen(),
         NotificationScreen(),

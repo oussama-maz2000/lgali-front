@@ -1,158 +1,69 @@
-import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:lgali/model/repository/profileRepository.dart';
-
-import '../utils/global.color.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class HomeController extends GetxController {
   final ProfileRepository _profileRepository = Get.put(ProfileRepository());
-  String title = "home Screen";
+  RefreshController refreshController =
+      RefreshController(initialRefresh: false);
+  final myList = Rx([]);
+  final supabase = Supabase.instance.client;
 
   var checkGPS = false.obs;
 
-  var list = [
-    {
-      "first_name": "oussama",
-      "last_name": "mazeghrane",
-      "phone": "0673719025",
-      "type": "professional",
-      "email": "loulououssama2015@gmail.com"
-    },
-    {
-      "first_name": "oussama",
-      "last_name": "mazeghrane",
-      "phone": "0673719025",
-      "type": "professional",
-      "email": "loulououssama2015@gmail.com"
-    },
-    {
-      "first_name": "oussama",
-      "last_name": "mazeghrane",
-      "phone": "0673719025",
-      "type": "professional",
-      "email": "loulououssama2015@gmail.com"
-    },
-  ];
-
-
   @override
-  void onInit() async {
-    super.onInit();
-    List data = await _profileRepository.fetchAllUsers();
-
+  void onInit() {
+    super.onInit;
+    listenToChanges();
   }
 
-  Card displayData(Map e) {
-    return Card(
-      elevation: 0,
-      color: Colors.white,
-      child: Container(
-        width: 150,
-        height: 150,
-        decoration: BoxDecoration(
-            gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  GlobalColor.validColor,
-                  Color.fromARGB(255, 116, 133, 142)
-                ]),
-            borderRadius: BorderRadius.circular(30)),
-        child: Padding(
-          padding: EdgeInsets.only(left: 20, right: 20, top: 16),
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Text(
-              e['first_name'],
-              style: TextStyle(
-                  fontFamily: 'Nunito',
-                  fontSize: 22,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 0.05),
-            ),
-            SizedBox(height: 3),
-            Text(
-              e['last_name'],
-              style: TextStyle(
-                  fontFamily: 'Nunito',
-                  fontSize: 22,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 0.05),
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            Text(
-              e['phone'],
-              style: TextStyle(
-                  fontFamily: 'Nunito',
-                  fontSize: 20,
-                  color: Colors.white,
-                  fontWeight: FontWeight.w500,
-                  letterSpacing: 0.05),
-            ),
-            SizedBox(height: 10),
-            Text(
-              e['type'],
-              style: TextStyle(
-                  fontFamily: 'Nunito',
-                  fontSize: 24,
-                  color: Colors.white,
-                  fontWeight: FontWeight.w500,
-                  letterSpacing: 0.05),
-            ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Text(
-                  '40',
-                  style: TextStyle(
-                    fontSize: 19,
-                    color: Colors.white,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                SizedBox(
-                  width: 3,
-                ),
-                Icon(
-                  Icons.star,
-                  color: Colors.amber,
-                ),
-              ],
-            ),
-          ]),
-        ),
-      ),
-    );
+  void updateLocation() {
+    activeGPS().then((value) => print(value));
+    _profileRepository.updateLocation(41.8387234, 6.9999999);
+    print('UPDATED LOCATION');
+    refreshController.refreshCompleted();
   }
 
-  Future<void> cheaking() async {
-    bool servicestatus;
+  void listenToChanges() {
+
+    final subscription = supabase
+        .from('userPlace')
+        .stream(primaryKey: ['user_id'])
+        .eq("user_id", "48b1256c-0da0-4e34-a09c-d1dd5ae93fe0")
+        .listen((List<Map<String, dynamic>> event) async {
+          final cluster = event[0].remove('cluster');
+          myList.value = await supabase
+              .from('companies')
+              .select('*')
+              .eq('cluster', cluster);
+        });
+
+    subscription.resume();
+  }
+
+  Future<Position?> activeGPS() async {
+    bool serviceStatus;
     LocationPermission permission;
-    servicestatus = await Geolocator.isLocationServiceEnabled();
+    serviceStatus = await Geolocator.isLocationServiceEnabled();
 
-    if (servicestatus) {
+    if (serviceStatus) {
       permission = await Geolocator.checkPermission();
       if (permission == LocationPermission.denied) {
         permission = await Geolocator.requestPermission();
         if (permission == LocationPermission.denied) {
-          return;
+          return null;
         }
       }
       checkGPS.value = true;
     } else {
       await Geolocator.openLocationSettings();
-      if (servicestatus) {
-        print('hello world');
+      if (serviceStatus) {
+        print('status actives well');
       }
     }
-    /* if (servicestatus && permission == LocationPermission.always) {
-      checkGPS.value = true;
-    } */
+
+    return await Geolocator.getCurrentPosition();
   }
 }
