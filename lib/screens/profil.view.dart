@@ -45,11 +45,16 @@ class ProfilScreen extends StatelessWidget {
               height: 3,
             ),
             Container(
-                child: Icon(
-              Icons.person_sharp,
-              size: 70,
-              color: GlobalColor.buttonColor,
-            )),
+              child: Obx(
+              ()=> CircleAvatar(
+                  radius: 30,
+                  backgroundImage:
+                      controller.type.value == 'professional'
+                          ? AssetImage('assets/images/pro.png')
+                          : AssetImage('assets/images/prt.png'),
+                ),
+              ),
+            ),
             SizedBox(height: 10),
             Obx(() {
               if (controller.values.value.isEmpty)
