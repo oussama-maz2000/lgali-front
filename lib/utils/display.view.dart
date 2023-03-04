@@ -28,7 +28,7 @@ class DisplayCompany extends StatelessWidget {
         ),
         Container(
           height: 100,
-          width: MediaQuery.of(context).size.width,
+          width: MediaQuery.of(context).size.width-20,
           margin: EdgeInsets.only(right: 3, left: 3),
           padding: EdgeInsets.all(3),
           decoration: BoxDecoration(
@@ -58,7 +58,7 @@ class DisplayCompany extends StatelessWidget {
                       style: GoogleFonts.montserrat(
                           textStyle: TextStyle(
                               color: GlobalColor.buttonColor,
-                              fontSize: 26,
+                              fontSize: 24,
                               fontWeight: FontWeight.w600))),
                   SizedBox(
                     height: 1,
@@ -66,7 +66,7 @@ class DisplayCompany extends StatelessWidget {
                   Text(e['company_name'],
                       style: GoogleFonts.montserrat(
                           textStyle: TextStyle(
-                              color: GlobalColor.textColor,
+                              color: GlobalColor.black,
                               fontSize: 18,
                               fontWeight: FontWeight.w500))),
                   SizedBox(
@@ -78,7 +78,7 @@ class DisplayCompany extends StatelessWidget {
                           style: GoogleFonts.montserrat(
                               textStyle: TextStyle(
                                   color: GlobalColor.buttonColor,
-                                  fontSize: 20,
+                                  fontSize: 17,
                                   fontWeight: FontWeight.w500))),
                       SizedBox(
                         width: 120,
@@ -87,7 +87,7 @@ class DisplayCompany extends StatelessWidget {
                           style: GoogleFonts.montserrat(
                               textStyle: TextStyle(
                                   color: CupertinoColors.systemYellow,
-                                  fontSize: 20,
+                                  fontSize: 13,
                                   fontWeight: FontWeight.w500))),
                     ],
                   ),
