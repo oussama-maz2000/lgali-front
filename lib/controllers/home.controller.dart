@@ -25,7 +25,7 @@ class HomeController extends GetxController {
         desiredAccuracy: LocationAccuracy.high);
     print(position.latitude);
     print(position.longitude);
-   // _profileRepository.updateLocation(41.8387234, 6.9999999);
+    _profileRepository.updateLocation(41.8387234, 6.9999999);
     refreshController.refreshCompleted();
   }
 

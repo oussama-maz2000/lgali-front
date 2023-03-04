@@ -23,8 +23,8 @@ class RequestController extends GetxController {
   }
 
   void getImage(ImageSource imageSource) async {
-    pickedFile = await ImagePicker().getImage(
-        source: imageSource, maxWidth: 480, maxHeight: 640, imageQuality: 25);
+    pickedFile = await ImagePicker().pickImage(
+        source: imageSource, maxWidth: 480, maxHeight: 640, imageQuality: 100);
     selectedImagePath.value = pickedFile.path;
     selectedImageSize.value =
         (File(selectedImagePath.value).lengthSync() / 1024 / 1024)
@@ -42,6 +42,10 @@ class RequestController extends GetxController {
       print(selectedImagePath.value);
       print(position.latitude);
       print(position.longitude);
+      selectedImagePath.value='';
+      selectedImageSize.value = 'Insert image';
+      selectedItem.value='';
+      descriptionController.text='';
       Get.snackbar("Sent", "Your request has been send we will search ",
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: GlobalColor.greenColor,
