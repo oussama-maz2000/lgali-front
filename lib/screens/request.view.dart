@@ -7,30 +7,40 @@ import '../utils/global.color.dart';
 import 'newRequest.view.dart';
 
 class RequestScreen extends StatelessWidget {
-  double _length = 500;
-
-
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Stack(children: [
-          GoogleMap(
-            initialCameraPosition:
-                CameraPosition(target: LatLng(35.537096, 6.109608), zoom: 15),
-          ),
+        body: Center(
+          child: Column(children: [
+            Card(
+              child: Container(
+                width: MediaQuery.of(context).size.width-20,
+                height: MediaQuery.of(context).size.height-160,
+                child: GoogleMap(
+                  initialCameraPosition: CameraPosition(
+                      target: LatLng(35.5359269,  6.1011878), zoom: 14),
+                  mapType: MapType.normal,
+                  myLocationEnabled: true,
 
-          Positioned(
-            left: 1,
-            right: 1,
-            bottom: 2,
-            child: Container(
+                  markers: {
+                    Marker(
+                        markerId: MarkerId('demi'),
+                        position: LatLng(35.5359269,  6.1011878))
+                  },
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Container(
               child: InkWell(
                 onTap: () => {Get.to(() => NewRequestScreen())},
                 child: Container(
                   alignment: Alignment.center,
-                  height: 55,
+                  height: 50,
+                  width: MediaQuery.of(context).size.width - 20,
                   decoration: BoxDecoration(
                     color: GlobalColor.buttonColor,
                     borderRadius: BorderRadius.circular(6),
@@ -45,8 +55,8 @@ class RequestScreen extends StatelessWidget {
                 ),
               ),
             ),
-          )
-        ]),
+          ]),
+        ),
       ),
     );
   }

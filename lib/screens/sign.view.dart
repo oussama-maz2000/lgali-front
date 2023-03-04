@@ -46,7 +46,7 @@ class SignScreen extends GetView<SignController> {
                   left: 3,
                   right: 3,
                   child: Container(
-                    width: 400,
+                    width: MediaQuery.of(context).size.width-20,
                     height: 262,
                     child: Card(
                       elevation: 5,
@@ -60,6 +60,8 @@ class SignScreen extends GetView<SignController> {
                             width: 360,
                             child: Center(
                               child: Container(
+                                width: MediaQuery.of(context).size.width-60,
+                                height: 45,
                                 child: TextFormField(
                                   controller: controller.emailController,
                                   onChanged: (v) {
@@ -91,6 +93,8 @@ class SignScreen extends GetView<SignController> {
                             width: 360,
                             child: Center(
                               child: Container(
+                                width: MediaQuery.of(context).size.width-60,
+                                height: 45,
                                 child: TextFormField(
                                   controller: controller.passwordController,
                                   obscureText: true,
@@ -123,8 +127,8 @@ class SignScreen extends GetView<SignController> {
                             onTap: () => {controller.isValid()},
                             child: Container(
                               alignment: Alignment.center,
-                              height: 55,
-                              width: 360,
+                              height: 50,
+                              width:MediaQuery.of(context).size.width-180 ,
                               decoration: BoxDecoration(
                                 color: GlobalColor.black,
                                 borderRadius: BorderRadius.circular(6),

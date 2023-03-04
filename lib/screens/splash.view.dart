@@ -5,7 +5,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lgali/controllers/login.controller.dart';
 import 'package:lgali/screens/home.view.dart';
 import 'package:lgali/screens/login.view.dart';
+import 'package:lgali/screens/newRequest.view.dart';
 import 'package:lgali/screens/profil.view.dart';
+import 'package:lgali/screens/request.view.dart';
 import 'package:lgali/screens/sign.view.dart';
 import 'package:lgali/screens/stepper.view.dart';
 import 'package:lgali/utils/display.view.dart';
@@ -16,7 +18,7 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Timer(Duration(seconds: 4), () {
-      Get.to(() => HomeScreen());
+      Get.to(() => DashBordScreen());
     });
     return Scaffold(
         

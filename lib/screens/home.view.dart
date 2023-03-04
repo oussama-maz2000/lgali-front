@@ -37,7 +37,7 @@ class HomeScreen extends StatelessWidget {
                     color: GlobalColor.buttonColor,
                   ),
                   onPressed: () {
-                    Get.to(ProfilScreen());
+                    Get.to(()=>ProfilScreen());
                   },
                 )),
           ],
@@ -58,21 +58,21 @@ class HomeScreen extends StatelessWidget {
                   clipBehavior: Clip.antiAlias,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(4)),
-                  elevation: 3,
+                  elevation: 1,
                   child: Container(
                     padding: EdgeInsets.all(5),
                     width: MediaQuery.of(context).size.width,
                     height: 200,
                     child: GoogleMap(
                       initialCameraPosition: CameraPosition(
-                          target: LatLng(35.537096,  6.109608),zoom: 13),
+                          target: LatLng(35.5359269,  6.1011878),zoom: 15),
                       mapType: MapType.normal,
 
                       myLocationEnabled: true,
                       markers: {
                         Marker(
                             markerId: MarkerId('demi'),
-                            position: LatLng(35.537096, 6.109608))
+                            position: LatLng(35.5359269, 6.1011878))
                       },
                     ),
                   ),

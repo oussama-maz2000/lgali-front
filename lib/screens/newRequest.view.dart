@@ -9,6 +9,7 @@ class NewRequestScreen extends GetView<RequestController> {
   final _requestController = Get.put(RequestController());
   final _services = ["doctor", "farmer", "pharmacies", "painter"];
 
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -76,10 +77,10 @@ class NewRequestScreen extends GetView<RequestController> {
 
                           icon: Icon(
                             Icons.arrow_drop_down_rounded,
-                            color: Color.fromARGB(255, 219, 221, 222),
-                            size: 40,
+                            color: GlobalColor.buttonColor,
+                            size: 30,
                           ),
-                          dropdownColor: GlobalColor.validColor,
+                          dropdownColor: GlobalColor.cardColor,
                           decoration: InputDecoration(
                             hintText: 'Service Type',
                             border: OutlineInputBorder(
@@ -123,7 +124,7 @@ class NewRequestScreen extends GetView<RequestController> {
                     height: 12,
                   ),
                   SizedBox(
-                    width: 360,
+                    width: 200,
                     child: Center(
                       child: Container(
                         child: InkWell(
@@ -134,9 +135,12 @@ class NewRequestScreen extends GetView<RequestController> {
                             () => Container(
                               alignment: Alignment.center,
                               height: 55,
-                              width: 360,
+
                               decoration: BoxDecoration(
-                                color: GlobalColor.textColor,
+                                color:
+                                    controller.selectedImagePath.value.length<2
+                                        ? GlobalColor.textColor
+                                        : GlobalColor.buttonColor,
                                 borderRadius: BorderRadius.circular(6),
                               ),
                               child: Text(
@@ -152,38 +156,21 @@ class NewRequestScreen extends GetView<RequestController> {
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: 240,
-                  ),
-                  InkWell(
-                    onTap: () async {
-                      await controller.sendRequest();
-                    },
-                    child: Container(
-                      alignment: Alignment.center,
-                      height: 55,
-                      width: 250,
-                      decoration: BoxDecoration(
-                        color: GlobalColor.greenColor,
-                        borderRadius: BorderRadius.circular(6),
-                      ),
-                      child: Text(
-                        'Send',
-                        style: TextStyle(
-                            color: GlobalColor.white,
-                            fontWeight: FontWeight.w400,
-                            fontSize: 23),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 12,
-                  ),
                 ],
               ),
             ),
           ),
         ]),
+        floatingActionButton: FloatingActionButton(
+          child: Icon(
+            LineIcons.rocket,
+            size: 30,
+          ),
+          backgroundColor: GlobalColor.buttonColor,
+          onPressed: () async {
+            await controller.sendRequest();
+          },
+        ),
       ),
     );
   }

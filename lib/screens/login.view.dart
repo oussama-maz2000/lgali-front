@@ -49,7 +49,7 @@ class LoginScreen extends GetView<LoginController> {
                   left: 3,
                   right: 3,
                   child: Container(
-                    width: 400,
+                    width: MediaQuery.of(context).size.width-20,
                     height: 262,
                     child: Card(
                       elevation: 5,
@@ -60,7 +60,8 @@ class LoginScreen extends GetView<LoginController> {
                             height: 15,
                           ),
                           SizedBox(
-                            width: 360,
+                            width: MediaQuery.of(context).size.width-60,
+                            height: 45,
                             child: Center(
                               child: Container(
                                 child: TextFormField(
@@ -91,9 +92,11 @@ class LoginScreen extends GetView<LoginController> {
                             height: 10,
                           ),
                           SizedBox(
-                            width: 360,
+
                             child: Center(
                               child: Container(
+                                width: MediaQuery.of(context).size.width-60,
+                                height: 45,
                                 child: TextFormField(
                                   controller: controller.passwordController,
                                   obscureText: true,
@@ -126,8 +129,8 @@ class LoginScreen extends GetView<LoginController> {
                             onTap: () => {controller.logInWithPassword()},
                             child: Container(
                               alignment: Alignment.center,
-                              height: 55,
-                              width: 360,
+                              height: 50,
+                              width:MediaQuery.of(context).size.width-180 ,
                               decoration: BoxDecoration(
                                 color: Colors.black,
                                 borderRadius: BorderRadius.circular(6),
