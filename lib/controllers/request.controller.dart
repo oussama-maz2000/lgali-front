@@ -5,6 +5,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 
 import 'package:image_picker/image_picker.dart';
+import 'package:lgali/utils/global.color.dart';
 
 class RequestController extends GetxController {
   static const String google_api_key =
@@ -22,7 +23,8 @@ class RequestController extends GetxController {
   }
 
   void getImage(ImageSource imageSource) async {
-    pickedFile = await ImagePicker().getImage(source: imageSource);
+    pickedFile = await ImagePicker().getImage(
+        source: imageSource, maxWidth: 480, maxHeight: 640, imageQuality: 25);
     selectedImagePath.value = pickedFile.path;
     selectedImageSize.value =
         (File(selectedImagePath.value).lengthSync() / 1024 / 1024)
@@ -40,6 +42,11 @@ class RequestController extends GetxController {
       print(selectedImagePath.value);
       print(position.latitude);
       print(position.longitude);
+      Get.snackbar("Sent", "Your request has been send we will search ",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: GlobalColor.greenColor,
+          margin: EdgeInsets.only(bottom: 5),
+          colorText: Colors.white);
     } else {
       Get.snackbar("error", "No image selected",
           snackPosition: SnackPosition.BOTTOM,

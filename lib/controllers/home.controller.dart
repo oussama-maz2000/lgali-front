@@ -19,10 +19,13 @@ class HomeController extends GetxController {
     listenToChanges();
   }
 
-  void updateLocation() {
+  void updateLocation() async{
     activeGPS().then((value) => print(value));
-    _profileRepository.updateLocation(41.8387234, 6.9999999);
-    print('UPDATED LOCATION');
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    print(position.latitude);
+    print(position.longitude);
+   // _profileRepository.updateLocation(41.8387234, 6.9999999);
     refreshController.refreshCompleted();
   }
 
