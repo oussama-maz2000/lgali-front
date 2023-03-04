@@ -129,7 +129,7 @@ class NewRequestScreen extends GetView<RequestController> {
                       child: Container(
                         child: InkWell(
                           onTap: () {
-                            controller.getImage(ImageSource.camera);
+                            controller.getImage(ImageSource.gallery);
                           },
                           child: Obx(
                             () => Container(
