@@ -9,7 +9,10 @@ class GlobalColor {
   static HexColor black = HexColor('#000000');
   static HexColor redColor = HexColor('#B80F0A');
   static HexColor validColor = HexColor('#3879E9');
-  static HexColor greenColor = HexColor('#5DC290');
-
+  static HexColor greenColor = HexColor('#99ff99');
+  static HexColor green = HexColor('#D6F2DA');
+  static HexColor blackNew = HexColor('#1B1A1C');
+  static HexColor mauve = HexColor('#EAE0FF');
+  static HexColor yellow = HexColor('#ffff99');
 
 }

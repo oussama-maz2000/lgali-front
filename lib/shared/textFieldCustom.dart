@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'global.color.dart';
 
 class CustomField extends StatelessWidget {
-  String? value;
+  String value;
   CustomField(this.value) {}
 
   @override
@@ -12,7 +12,7 @@ class CustomField extends StatelessWidget {
       children: [
         SizedBox(height: 10),
         Container(
-          width: 360,
+          width: MediaQuery.of(context).size.width-10,
           child: Center(
             child: Container(
               child: TextFormField(
