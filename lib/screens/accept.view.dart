@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
-import '../utils/global.color.dart';
-import '../utils/notificationCard.form.dart';
+import 'package:get/get.dart';
+
+import '../controllers/notificationRequest.controller.dart';
+import '../shared/global.color.dart';
+import '../shared/notificationCard.form.dart';
 
 class NotificationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    Get.lazyPut(() => NotificationController());
+    final controller = Get.find<NotificationController>();
     return SafeArea(
       child: Scaffold(
         body: Container(
@@ -14,7 +19,7 @@ class NotificationScreen extends StatelessWidget {
             ),
             Container(
               alignment: Alignment.center,
-              child: Text('Services Accepted',
+              child: Text('Requests',
                   style: TextStyle(
                       color: GlobalColor.buttonColor,
                       fontFamily: 'Nunito',
@@ -25,19 +30,11 @@ class NotificationScreen extends StatelessWidget {
               height: 10,
             ),
             Expanded(
-              child: ListView(
-                children: [
-                  CardNotification(),
-                  CardNotification(),
-                  CardNotification(),
-                  CardNotification(),
-                  CardNotification(),
-                  CardNotification(),
-                  CardNotification(),
-                  CardNotification(),
-                  CardNotification(),
-                  CardNotification(),
-                ],
+              child: Obx(
+                ()=> ListView(
+                    children: controller.requests.value
+                        .map((e) => CardNotification(e))
+                        .toList()),
               ),
             )
           ]),
