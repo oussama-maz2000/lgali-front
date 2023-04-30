@@ -1,14 +1,18 @@
 import 'package:get/get.dart';
+import 'package:lgali/model/repository/companyRepository.dart';
+import 'package:logging/logging.dart';
 
-class DisplayCompaniesRequestController extends GetxController{
+class DisplayCompaniesRequestController extends GetxController {
+  final CompanyRepository _companyRepository = Get.put(CompanyRepository());
+  var data = Get.arguments;
+  var companies = Rx([]);
+  final log = Logger('DisplayCompaniesRequestController');
 
-  var data=Get.arguments;
 
   @override
-  void onInit() {
-    // TODO: implement onInit
+  void onInit() async {
+  print(data);
     super.onInit();
-    print(data);
+    companies.value = await _companyRepository.fetchAllCompanies(data[0],data[1]);
   }
-
 }

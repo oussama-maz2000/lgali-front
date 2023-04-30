@@ -8,12 +8,13 @@ import 'package:selectable_container/selectable_container.dart';
 
 import 'package:lgali/model/repository/profileRepository.dart';
 
-import '../utils/global.color.dart';
+import '../shared/global.color.dart';
 
 class StepperController extends GetxController {
   var box = Hive.box('user');
-  final _repository = Get.put(ProfileRepository());
-
+  //final _repository = Get.put(ProfileRepository());
+  var repository = Get.lazyPut(() => ProfileRepository());
+  var _repository = Get.find<ProfileRepository>();
   final _services = ["doctor", "farmer", "pharmacies", "painter"];
 
   TextEditingController userFirstNameController = TextEditingController();
@@ -35,152 +36,157 @@ class StepperController extends GetxController {
   var result = [].obs;
 
   Widget userInfo() {
-    return Container(
-        child: Column(
-      children: [
-        Container(
-          alignment: Alignment.center,
-          child: Text(
-            "User Profil",
-            style: TextStyle(
-              fontSize: 30,
-              color: GlobalColor.buttonColor,
-              fontWeight: FontWeight.w700,
+    return Center(
+      child: Container(
+          child: Column(
+        children: [
+          SizedBox(
+            height: 80,
+          ),
+          Container(
+            alignment: Alignment.center,
+            child: Text(
+              "User Profil",
+              style: TextStyle(
+                fontSize: 30,
+                color: GlobalColor.buttonColor,
+                fontWeight: FontWeight.w700,
+              ),
             ),
           ),
-        ),
-        SizedBox(height: 10),
-        Container(
-          margin: EdgeInsets.only(left: 30, right: 30),
-          child: Text(
-            "Please enter your information to validate your profile",
-            style: TextStyle(fontSize: 18, color: GlobalColor.textColor),
+          SizedBox(height: 10),
+          Container(
+            margin: EdgeInsets.only(left: 30, right: 30),
+            child: Text(
+              "Please enter your information to validate your profile",
+              style: TextStyle(fontSize: 18, color: GlobalColor.textColor),
+            ),
           ),
-        ),
-        SizedBox(height: 20),
-        Card(
-          elevation: 0,
-          color: GlobalColor.cardColor,
-          child: Column(
-            children: [
-              SizedBox(
-                height: 15,
-                width: double.infinity,
-              ),
-              SizedBox(
-                width: 360,
-                child: Center(
-                  child: Container(
-                    child: TextFormField(
-                      controller: userFirstNameController,
-                      onChanged: (value) {
-                        if (value.length > 3) {
-                          firstNameValid.value = true;
-                        } else {
-                          firstNameValid.value = false;
-                        }
-                      },
-                      style: TextStyle(
-                        fontSize: 23,
-                      ),
-                      decoration: InputDecoration(
-                        hintText: 'First Name',
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10)),
-                        hintStyle: TextStyle(
-                            height: 1,
-                            fontSize: 20,
-                            color: GlobalColor.buttonColor),
-                      ),
-                      keyboardType: TextInputType.name,
-                    ),
-                  ),
+          SizedBox(height: 20),
+          Card(
+            elevation: 0,
+            color: GlobalColor.cardColor,
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 15,
+                  width: double.infinity,
                 ),
-              ),
-              SizedBox(
-                height: 12,
-              ),
-              SizedBox(
-                width: 360,
-                child: Center(
-                  child: Container(
-                    child: TextFormField(
-                      controller: userLastNameController,
-                      onChanged: (value) {
-                        if (value.length > 3) {
-                          lastNameValid.value = true;
-                        } else {
-                          lastNameValid.value = false;
-                        }
-                      },
-                      style: TextStyle(fontSize: 23),
-                      decoration: InputDecoration(
-                        hintText: 'Last Name',
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10)),
-                        hintStyle: TextStyle(
-                            height: 1,
-                            fontSize: 20,
-                            color: GlobalColor.buttonColor),
-                      ),
-                      keyboardType: TextInputType.name,
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 12,
-              ),
-              SizedBox(
-                width: 360,
-                child: Center(
-                  child: Container(
-                    child: TextFormField(
-                      controller: userPhoneController,
-                      onChanged: (value) {
-                        if (value.length == 10) {
-                          if (value.startsWith('07') ||
-                              value.startsWith('05') ||
-                              value.startsWith('06')) {
-                            phoneValid.value = true;
+                SizedBox(
+                  width: 360,
+                  child: Center(
+                    child: Container(
+                      child: TextFormField(
+                        controller: userFirstNameController,
+                        onChanged: (value) {
+                          if (value.length > 3) {
+                            firstNameValid.value = true;
+                          } else {
+                            firstNameValid.value = false;
                           }
-                        } else {
-                          phoneValid.value = false;
-                        }
-                      },
-                      style: TextStyle(fontSize: 23),
-                      decoration: InputDecoration(
-                        hintText: 'Phone Number',
-                        suffix: Text('+213'),
-                        suffixStyle: TextStyle(fontSize: 17),
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10)),
-                        hintStyle: TextStyle(
-                            height: 1,
-                            fontSize: 20,
-                            color: GlobalColor.buttonColor),
+                        },
+                        style: TextStyle(
+                          fontSize: 23,
+                        ),
+                        decoration: InputDecoration(
+                          hintText: 'First Name',
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                          hintStyle: TextStyle(
+                              height: 1,
+                              fontSize: 20,
+                              color: GlobalColor.buttonColor),
+                        ),
+                        keyboardType: TextInputType.name,
                       ),
-                      keyboardType: TextInputType.number,
                     ),
                   ),
                 ),
-              ),
-            ],
+                SizedBox(
+                  height: 12,
+                ),
+                SizedBox(
+                  width: 360,
+                  child: Center(
+                    child: Container(
+                      child: TextFormField(
+                        controller: userLastNameController,
+                        onChanged: (value) {
+                          if (value.length > 3) {
+                            lastNameValid.value = true;
+                          } else {
+                            lastNameValid.value = false;
+                          }
+                        },
+                        style: TextStyle(fontSize: 23),
+                        decoration: InputDecoration(
+                          hintText: 'Last Name',
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                          hintStyle: TextStyle(
+                              height: 1,
+                              fontSize: 20,
+                              color: GlobalColor.buttonColor),
+                        ),
+                        keyboardType: TextInputType.name,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 12,
+                ),
+                SizedBox(
+                  width: 360,
+                  child: Center(
+                    child: Container(
+                      child: TextFormField(
+                        controller: userPhoneController,
+                        onChanged: (value) {
+                          if (value.length == 10) {
+                            if (value.startsWith('07') ||
+                                value.startsWith('05') ||
+                                value.startsWith('06')) {
+                              phoneValid.value = true;
+                            }
+                          } else {
+                            phoneValid.value = false;
+                          }
+                        },
+                        style: TextStyle(fontSize: 23),
+                        decoration: InputDecoration(
+                          hintText: 'Phone Number',
+                          suffix: Text('+213'),
+                          suffixStyle: TextStyle(fontSize: 17),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                          hintStyle: TextStyle(
+                              height: 1,
+                              fontSize: 20,
+                              color: GlobalColor.buttonColor),
+                        ),
+                        keyboardType: TextInputType.number,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
-        SizedBox(
-          height: 16,
-        ),
-      ],
-    ));
+          SizedBox(
+            height: 16,
+          ),
+        ],
+      )),
+    );
   }
 
   Widget userType() {
     return Container(
         child: Column(children: [
-      SizedBox(
-        height: 10,
-      ),
+          SizedBox(
+            height: 80,
+          ),
       Container(
           child: Text(
         "Type of Account",
@@ -214,7 +220,7 @@ class StepperController extends GetxController {
               color: GlobalColor.cardColor,
               child: CircleAvatar(
                 backgroundImage: AssetImage('assets/images/prt.png'),
-                radius: 45,
+                radius: 40,
               ),
             ),
             SizedBox(
@@ -230,7 +236,7 @@ class StepperController extends GetxController {
                   'I am a particular',
                   style: TextStyle(
                       color: GlobalColor.buttonColor,
-                      fontSize: 20,
+                      fontSize: 18,
                       fontWeight: FontWeight.w500),
                 ),
                 SizedBox(
@@ -273,7 +279,7 @@ class StepperController extends GetxController {
               color: GlobalColor.cardColor,
               child: CircleAvatar(
                 backgroundImage: AssetImage('assets/images/pro.png'),
-                radius: 45,
+                radius: 40,
               ),
             ),
             SizedBox(
@@ -289,7 +295,7 @@ class StepperController extends GetxController {
                   'I am a professional',
                   style: TextStyle(
                       color: GlobalColor.buttonColor,
-                      fontSize: 20,
+                      fontSize: 18,
                       fontWeight: FontWeight.w500),
                 ),
                 SizedBox(
@@ -322,6 +328,9 @@ class StepperController extends GetxController {
     return Container(
         child: Column(
       children: [
+        SizedBox(
+          height: 80,
+        ),
         Container(
           alignment: Alignment.center,
           child: Text(
@@ -433,6 +442,9 @@ class StepperController extends GetxController {
     return Container(
       child: Column(
         children: [
+          SizedBox(
+            height: 80,
+          ),
           Container(
               child: Text(
             'Company type',
@@ -455,11 +467,11 @@ class StepperController extends GetxController {
                             color: GlobalColor.buttonColor,
                             fontWeight: FontWeight.w400),
                       ),
-                      value: e,
+                      value: Text(e,style: TextStyle(color: GlobalColor.green),),
                     ))
                 .toList(),
             onChanged: (value) {
-              selected.value = value!;
+              selected.value = value as String;
             },
             icon: Icon(
               Icons.arrow_drop_down_rounded,
@@ -506,7 +518,7 @@ class StepperController extends GetxController {
       child: Column(
         children: [
           SizedBox(
-            height: 40,
+            height: 80,
           ),
           Text(
             'App description',

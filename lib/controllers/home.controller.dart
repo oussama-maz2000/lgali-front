@@ -1,42 +1,44 @@
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:lgali/model/repository/profileRepository.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
+
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class HomeController extends GetxController {
-  final ProfileRepository _profileRepository = Get.put(ProfileRepository());
-  RefreshController refreshController =
-      RefreshController(initialRefresh: false);
+  // final ProfileRepository _profileRepository = Get.put(ProfileRepository());
+  var repository = Get.lazyPut(() => ProfileRepository());
+  var _profileRepository = Get.find<ProfileRepository>();
+
   final myList = Rx([]);
   final supabase = Supabase.instance.client;
-
+  var latitude = 0.0.obs;
+  var longitude = 0.0.obs;
   var checkGPS = false.obs;
 
   @override
   void onInit() {
     super.onInit;
     listenToChanges();
+
+    //await activeGPS();
   }
 
-  void updateLocation() async{
-    activeGPS().then((value) => print(value));
+  void updateLocation() async {
     Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
-    print(position.latitude);
-    print(position.longitude);
-    _profileRepository.updateLocation(41.8387234, 6.9999999);
-    refreshController.refreshCompleted();
+    latitude.value = position.latitude;
+    longitude.value = position.longitude;
+    _profileRepository.updateLocation(latitude.value, longitude.value);
   }
 
   void listenToChanges() {
-
     final subscription = supabase
         .from('userPlace')
         .stream(primaryKey: ['user_id'])
         .eq("user_id", "48b1256c-0da0-4e34-a09c-d1dd5ae93fe0")
         .listen((List<Map<String, dynamic>> event) async {
           final cluster = event[0].remove('cluster');
+
           myList.value = await supabase
               .from('companies')
               .select('*')

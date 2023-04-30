@@ -5,13 +5,24 @@ import 'package:hive/hive.dart';
 import 'package:lgali/screens/stepper.view.dart';
 
 import 'package:lgali/controllers/sing.controller.dart';
+import 'package:lgali/screens/stepper/user_info.view.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+
+import '../shared/custom_snack_bar.dart';
+import '../shared/global.color.dart';
 
 class OtpController extends GetxController {
   // ----------SupaBase----------//
-
+  var userEmail = Get.arguments;
   final supabase = Supabase.instance.client;
   // ----------Dependency Injection----------//
+
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+    print(userEmail);
+  }
 
   final signController = Get.put(SignController());
   var box = Hive.box('user');
@@ -25,9 +36,7 @@ class OtpController extends GetxController {
   Future<void> verification() async {
     try {
       final AuthResponse response = await supabase.auth.verifyOTP(
-          token: otpCode.value.text,
-          type: OtpType.signup,
-          email: signController.emailController.value.text);
+          token: otpCode.value.text, type: OtpType.signup, email: userEmail);
       session = supabase.auth.currentSession?.accessToken;
       user = response.user;
       session == null ? isAuthenticated = false : isAuthenticated = true;
@@ -39,18 +48,16 @@ class OtpController extends GetxController {
         'session': session,
         'isAuth': isAuthenticated
       });
-      print(box.get('id'));
-      print(box.get('email'));
-      print(box.get('session'));
-      print(box.get('isAuth'));
 
-      Get.off(() => StepperScreen());
+      Get.off(() => UserInfoScreen());
     } catch (err) {
-      Get.snackbar("Error", "Token has expired or is invalid",
-          backgroundColor: Colors.redAccent,
-          colorText: Colors.white,
-          margin: EdgeInsets.only(bottom: 4, left: 4, right: 4),
-          snackPosition: SnackPosition.BOTTOM);
+      print(err);
+      CustomSnackBar(
+          'Error', 'Token has expired or is invalid', GlobalColor.redColor);
     }
+  }
+
+  void printOtp() {
+    print(otpCode.value.text);
   }
 }

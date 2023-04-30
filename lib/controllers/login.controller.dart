@@ -4,8 +4,9 @@ import 'package:hive/hive.dart';
 import 'package:lgali/model/repository/profileRepository.dart';
 import 'package:lgali/screens/dashbord.view.dart';
 import 'package:lgali/screens/stepper.view.dart';
+import 'package:lgali/shared/custom_snack_bar.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import '../utils/global.color.dart';
+import '../shared/global.color.dart';
 
 class LoginController extends GetxController {
   final supabase = Supabase.instance.client;
@@ -46,27 +47,18 @@ class LoginController extends GetxController {
           'session': session,
           'isAuth': isAuthenticated
         });
-        Get.snackbar("Logged in", "Welcome in your account ",
-            backgroundColor: GlobalColor.greenColor,
-            colorText: Colors.white,
-            margin: EdgeInsets.only(bottom: 4, left: 4, right: 4),
-            snackPosition: SnackPosition.BOTTOM);
+
+        CustomSnackBar(
+            'Logged in', "Welcome in your account", GlobalColor.green);
+
         Get.offAll(() => DashBordScreen());
       } catch (e) {
-        Get.snackbar("Warning", "Create Your Profile Please ...",
-            backgroundColor: Colors.orangeAccent,
-            colorText: Colors.white,
-            margin: EdgeInsets.only(bottom: 4, left: 4, right: 4),
-            snackPosition: SnackPosition.BOTTOM);
-
+        CustomSnackBar(
+            'Warning', 'Create Your Profile Please ...', Colors.orangeAccent);
         Get.to(() => StepperScreen());
       }
     } catch (e) {
-      Get.snackbar("Error", "Incorrect email or password",
-          backgroundColor: Colors.redAccent,
-          colorText: Colors.white,
-          margin: EdgeInsets.only(bottom: 4, left: 4, right: 4),
-          snackPosition: SnackPosition.BOTTOM);
+      CustomSnackBar('Error', 'invalid email', GlobalColor.redColor);
     }
   }
 }

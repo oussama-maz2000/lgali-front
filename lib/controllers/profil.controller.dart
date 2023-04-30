@@ -6,19 +6,21 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ProfilController extends GetxController {
   final supabase = Supabase.instance.client;
-  final ProfileRepository _profileRepository = Get.put(ProfileRepository());
+
+  final ProfileRepository _profileRepository =
+      Get.put(ProfileRepository(), permanent: false);
+
   var box = Hive.box('user');
 
   final values = Rx([]);
-  final type=''.obs;
+  final type = ''.obs;
 
   @override
   void onInit() async {
     super.onInit();
     var data = await _profileRepository.fetchUser(box.get('id'));
     values.value = data;
-    type.value=values.value[3];
-
+    type.value = values.value[8];
   }
 
   Future<void> signOut() async {
