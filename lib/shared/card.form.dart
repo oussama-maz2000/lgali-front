@@ -1,15 +1,15 @@
 import 'package:get/get.dart';
 
 import 'package:flutter/material.dart';
-import 'package:lgali/screens/notification.view.dart';
-import 'package:lgali/utils/global.color.dart';
+import 'package:lgali/screens/accept.view.dart';
+import 'package:lgali/shared/global.color.dart';
 
 class CardCustom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Get.to(NotificationScreen());
+        Get.to(AcceptScreen());
       },
       child: Card(
         elevation: 0,

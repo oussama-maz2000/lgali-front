@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:lgali/screens/home.view.dart';
-import 'package:lgali/utils/global.color.dart';
+import 'package:lgali/shared/global.color.dart';
 import 'package:line_icons/line_icons.dart';
 
 import '../screens/profil.view.dart';

@@ -10,9 +10,9 @@ class CustomField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(height: 10),
+        SizedBox(height: 15),
         Container(
-          width: MediaQuery.of(context).size.width-10,
+          width: MediaQuery.of(context).size.width - 10,
           child: Center(
             child: Container(
               child: TextFormField(
@@ -22,12 +22,14 @@ class CustomField extends StatelessWidget {
                 ),
                 decoration: InputDecoration(
                   hintText: value,
-                  border:
-                      OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10)),
                   hintStyle: TextStyle(
-                      height: 1, fontSize: 20, color: GlobalColor.buttonColor),
+                      fontFamily: 'Oxygen',
+                      height: 1,
+                      fontSize: 20,
+                      color: GlobalColor.buttonColor),
                 ),
-
               ),
             ),
           ),
