@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-import '../utils/global.color.dart';
+import '../shared/global.color.dart';
 import 'newRequest.view.dart';
 
 class RequestScreen extends StatelessWidget {
@@ -15,24 +15,23 @@ class RequestScreen extends StatelessWidget {
           child: Column(children: [
             Card(
               child: Container(
-                width: MediaQuery.of(context).size.width-20,
-                height: MediaQuery.of(context).size.height-160,
+                width: MediaQuery.of(context).size.width - 20,
+                height: MediaQuery.of(context).size.height - 160,
                 child: GoogleMap(
                   initialCameraPosition: CameraPosition(
-                      target: LatLng(35.5359269,  6.1011878), zoom: 14),
+                      target: LatLng(35.5359269, 6.1011878), zoom: 14),
                   mapType: MapType.normal,
                   myLocationEnabled: true,
-
                   markers: {
                     Marker(
                         markerId: MarkerId('demi'),
-                        position: LatLng(35.5359269,  6.1011878))
+                        position: LatLng(35.5359269, 6.1011878))
                   },
                 ),
               ),
             ),
             SizedBox(
-              height: 5,
+              height: 3,
             ),
             Container(
               child: InkWell(
@@ -42,7 +41,7 @@ class RequestScreen extends StatelessWidget {
                   height: 50,
                   width: MediaQuery.of(context).size.width - 20,
                   decoration: BoxDecoration(
-                    color: GlobalColor.buttonColor,
+                    color: GlobalColor.mauve,
                     borderRadius: BorderRadius.circular(6),
                   ),
                   child: Text(

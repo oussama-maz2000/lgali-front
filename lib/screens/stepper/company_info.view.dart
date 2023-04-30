@@ -1,15 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lgali/screens/dashbord.view.dart';
+import 'package:lgali/screens/stepper/term.view.dart';
 
+import '../../controllers/stepper/company_info.controller.dart';
+import '../../shared/custom_snack_bar.dart';
 import '../../shared/global.color.dart';
+import '../../shared/theme/app_theme.dart';
 
 class CompanyInfoScreen extends StatelessWidget {
-  final _services = ["doctor", "farmer", "pharmacies", "painter"];
+  final _services = [
+    "doctor",
+    "babysitter",
+    "pharmacie",
+    'detist'
+        'plumber',
+    'veterinarian',
+    'lawyer'
+        'mechanic'
+  ];
+    final controller = Get.put(CompanyInfoController());
 
   @override
   Widget build(BuildContext context) {
+
     return SafeArea(
         child: Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Container(
           child: Column(
         children: [
@@ -22,20 +39,22 @@ class CompanyInfoScreen extends StatelessWidget {
               "Company Profil",
               style: TextStyle(
                 fontSize: 30,
-                color: GlobalColor.buttonColor,
+                color: AppTheme.title2,
                 fontWeight: FontWeight.w700,
               ),
             ),
           ),
           SizedBox(height: 20),
           Container(
-            margin: EdgeInsets.only(left: 35, right: 30),
+            margin: EdgeInsets.only(left: 8),
+            alignment: Alignment.center,
             child: Text(
               "Please enter your information to "
-              "validate your company",
+              "validate your                        company",
               style: TextStyle(
                 fontSize: 18,
                 color: GlobalColor.textColor,
+                fontFamily: 'Oxygen',
               ),
             ),
           ),
@@ -54,14 +73,14 @@ class CompanyInfoScreen extends StatelessWidget {
                   child: Center(
                     child: Container(
                       child: TextFormField(
-                        /*controller: companyNameController,
-                            onChanged: (value) {
-                              if (value.length > 3) {
-                                companyNameValid.value = true;
-                              } else {
-                                companyNameValid.value = false;
-                              }
-                            },*/
+                        controller: controller.companyName,
+                        onChanged: (value) {
+                          if (value.length > 3) {
+                            controller.companyNameValid.value = true;
+                          } else {
+                            controller.companyNameValid.value = false;
+                          }
+                        },
                         style: TextStyle(
                           fontSize: 23,
                         ),
@@ -70,8 +89,8 @@ class CompanyInfoScreen extends StatelessWidget {
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10)),
                           hintStyle: TextStyle(
-                              height: 1,
-                              fontSize: 20,
+                              fontFamily: 'Oxygen',
+                              fontSize: 18,
                               color: GlobalColor.buttonColor),
                         ),
                         keyboardType: TextInputType.name,
@@ -87,18 +106,18 @@ class CompanyInfoScreen extends StatelessWidget {
                   child: Center(
                     child: Container(
                       child: TextFormField(
-                        /*controller: companyPhoneController,
-                            onChanged: (value) {
-                              if (value.length == 10) {
-                                if (value.startsWith('07') ||
-                                    value.startsWith('05') ||
-                                    value.startsWith('06')) {
-                                  companyPhoneValid.value = true;
-                                }
-                              } else {
-                                companyPhoneValid.value = false;
-                              }
-                            },*/
+                        controller: controller.companyPhone,
+                        onChanged: (value) {
+                          if (value.length == 10) {
+                            if (value.startsWith('07') ||
+                                value.startsWith('05') ||
+                                value.startsWith('06')) {
+                              controller.companyPhoneValid.value = true;
+                            }
+                          } else {
+                            controller.companyPhoneValid.value = false;
+                          }
+                        },
                         style: TextStyle(fontSize: 23),
                         decoration: InputDecoration(
                           hintText: 'Company Phone Number',
@@ -107,8 +126,8 @@ class CompanyInfoScreen extends StatelessWidget {
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10)),
                           hintStyle: TextStyle(
-                              height: 1,
-                              fontSize: 20,
+                              fontFamily: 'Oxygen',
+                              fontSize: 18,
                               color: GlobalColor.buttonColor),
                         ),
                         keyboardType: TextInputType.number,
@@ -122,10 +141,6 @@ class CompanyInfoScreen extends StatelessWidget {
                 SizedBox(
                   width: MediaQuery.of(context).size.width - 30,
                   child: DropdownButtonFormField(
-                    style: TextStyle(
-                        fontSize: 23,
-                        color: GlobalColor.buttonColor,
-                        fontWeight: FontWeight.w400),
                     elevation: 0,
                     items: _services
                         .map((e) => DropdownMenuItem(
@@ -133,28 +148,28 @@ class CompanyInfoScreen extends StatelessWidget {
                                 e,
                                 style: TextStyle(
                                     fontSize: 23,
-                                    color: GlobalColor.cardColor,
+                                    color: GlobalColor.buttonColor,
                                     fontWeight: FontWeight.w400),
                               ),
-                              value: e ,
+                              value: e,
                             ))
                         .toList(),
                     onChanged: (value) {
-                      value = value!;
+                      controller.selected.value = value!;
                     },
                     icon: Icon(
                       Icons.arrow_drop_down_rounded,
                       color: GlobalColor.buttonColor,
                       size: 30,
                     ),
-                    dropdownColor: GlobalColor.buttonColor,
+                    dropdownColor: GlobalColor.cardColor,
                     decoration: InputDecoration(
                       hintText: 'Company Type',
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10)),
                       hintStyle: TextStyle(
-                          height: 1,
-                          fontSize: 20,
+                          fontFamily: 'Oxygen',
+                          fontSize: 18,
                           color: GlobalColor.buttonColor),
                     ),
                   ),
@@ -163,18 +178,18 @@ class CompanyInfoScreen extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.height - 510,
+            height: MediaQuery.of(context).size.height - 550,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               ElevatedButton(
                 onPressed: () {
-                  Get.back();
+                 // Get.back();
                 },
                 child: Text('Back'),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: GlobalColor.buttonColor,
+                  backgroundColor: const Color(0xff136AFB),
                   textStyle:
                       TextStyle(color: GlobalColor.cardColor, fontSize: 17),
                   fixedSize: Size(90, 40),
@@ -188,10 +203,20 @@ class CompanyInfoScreen extends StatelessWidget {
                 width: 30,
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  if (controller.companyNameValid.value &&
+                      controller.companyPhoneValid.value &&
+                      controller.selected.value.length > 2) {
+                    controller.setDataHive();
+                    Get.off(() => TermsScreen());
+                  } else {
+                    CustomSnackBar("Error", "invalid form try correctly please",
+                        GlobalColor.redColor);
+                  }
+                },
                 child: Text('Next'),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: GlobalColor.buttonColor,
+                  backgroundColor: const Color(0xff136AFB),
                   textStyle:
                       TextStyle(color: GlobalColor.cardColor, fontSize: 17),
                   fixedSize: Size(90, 40),

@@ -3,11 +3,11 @@ import 'package:get/get.dart';
 import 'package:line_icons/line_icons.dart';
 
 import '../controllers/sing.controller.dart';
-import '../utils/global.color.dart';
+import '../shared/global.color.dart';
 import 'login.view.dart';
 
-class SignScreen extends GetView<SignController> {
-  final _controller = Get.put(SignController());
+class SignScreen extends StatelessWidget {
+  // final controller = Get.put(SignController());
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +46,7 @@ class SignScreen extends GetView<SignController> {
                   left: 3,
                   right: 3,
                   child: Container(
-                    width: MediaQuery.of(context).size.width-20,
+                    width: MediaQuery.of(context).size.width - 20,
                     height: 262,
                     child: Card(
                       elevation: 5,
@@ -60,18 +60,9 @@ class SignScreen extends GetView<SignController> {
                             width: 360,
                             child: Center(
                               child: Container(
-                                width: MediaQuery.of(context).size.width-60,
+                                width: MediaQuery.of(context).size.width - 60,
                                 height: 45,
                                 child: TextFormField(
-                                  controller: controller.emailController,
-                                  onChanged: (v) {
-                                    if (v.contains('@') && v.contains('.com')) {
-                                      controller.emailValid.value = true;
-                                    } else if (!v.contains('@') ||
-                                        !v.contains('.com')) {
-                                      controller.emailValid.value = false;
-                                    }
-                                  },
                                   style: TextStyle(fontSize: 23),
                                   decoration: InputDecoration(
                                       hintText: 'Email address',
@@ -93,18 +84,9 @@ class SignScreen extends GetView<SignController> {
                             width: 360,
                             child: Center(
                               child: Container(
-                                width: MediaQuery.of(context).size.width-60,
+                                width: MediaQuery.of(context).size.width - 60,
                                 height: 45,
                                 child: TextFormField(
-                                  controller: controller.passwordController,
-                                  obscureText: true,
-                                  onChanged: (v) {
-                                    if (v.length > 6) {
-                                      controller.passwordValid.value = true;
-                                    } else if (v.length < 6) {
-                                      controller.passwordValid.value = false;
-                                    }
-                                  },
                                   style: TextStyle(fontSize: 23),
                                   decoration: InputDecoration(
                                       hintText: 'Password',
@@ -124,11 +106,11 @@ class SignScreen extends GetView<SignController> {
                             height: 30,
                           ),
                           InkWell(
-                            onTap: () => {controller.isValid()},
+                            //   onTap: () => {controller.isValid()},
                             child: Container(
                               alignment: Alignment.center,
                               height: 50,
-                              width:MediaQuery.of(context).size.width-180 ,
+                              width: MediaQuery.of(context).size.width - 180,
                               decoration: BoxDecoration(
                                 color: GlobalColor.black,
                                 borderRadius: BorderRadius.circular(6),

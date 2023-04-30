@@ -6,10 +6,10 @@ import 'package:pinput/pinput.dart';
 
 import '../controllers/otp.controller.dart';
 
-import '../utils/global.color.dart';
+import '../shared/global.color.dart';
 
-class OtpScreen extends GetView<OtpController> {
-  final _controller = Get.put(OtpController());
+class OtpScreen extends StatelessWidget {
+  final controller = Get.put(OtpController());
 
   @override
   Widget build(BuildContext context) {

@@ -1,57 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lgali/utils/textFieldCustom.dart';
+import 'package:lgali/shared/textFieldCustom.dart';
 import 'package:line_icons/line_icons.dart';
 
 import '../controllers/profil.controller.dart';
-import '../utils/global.color.dart';
+import '../shared/global.color.dart';
 
 class ProfilScreen extends StatelessWidget {
-  final controller = Get.put(ProfilController());
-
   @override
   Widget build(BuildContext context) {
+    Get.lazyPut(() => ProfilController());
+    final controller = Get.find<ProfilController>();
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          backgroundColor: GlobalColor.redColor,
+          title: Text(
+            "Profil",
+            style: TextStyle(
+                color: GlobalColor.cardColor,
+                fontSize: 30,
+                //fontFamily: 'brandon',
+                fontWeight: FontWeight.w500),
+          ),
+        ),
         body: Column(
           children: [
-            Row(
-              children: [
-                Container(
-                  child: RawMaterialButton(
-                    onPressed: () {
-                      Get.back();
-                    },
-                    elevation: 2.0,
-                    fillColor: Colors.white,
-                    child: Icon(LineIcons.arrowLeft, size: 25),
-                    shape: CircleBorder(),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(left: 80),
-                  child: Text(
-                    'Profil',
-                    style: TextStyle(
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
-                        color: GlobalColor.buttonColor),
-                  ),
-                ),
-              ],
-            ),
             SizedBox(
               height: 3,
             ),
             Container(
               child: Obx(
-              ()=> CircleAvatar(
+                () => CircleAvatar(
                   radius: 30,
-                  backgroundImage:
-                      controller.type.value == 'professional'
-                          ? AssetImage('assets/images/pro.png')
-                          : AssetImage('assets/images/prt.png'),
+                  backgroundImage: controller.type.value != ''
+                      ? AssetImage(
+                          'assets/images/jobs/${controller.type.value}.jpg')
+                      : AssetImage('assets/images/prt.png'),
                 ),
               ),
             ),
@@ -72,7 +59,7 @@ class ProfilScreen extends StatelessWidget {
                   child: SingleChildScrollView(
                     child: Column(
                       children: controller.values.value
-                          .map((e) => CustomField(e))
+                          .map((e) => CustomField(e.toString()))
                           .toList(),
                     ),
                   ),
@@ -87,7 +74,7 @@ class ProfilScreen extends StatelessWidget {
           onPressed: () {
             controller.signOut();
           },
-          backgroundColor: GlobalColor.redColor,
+          backgroundColor: Colors.redAccent,
           child: const Icon(Icons.exit_to_app_rounded),
         ),
       ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lgali/controllers/stepper.controller.dart';
-import 'package:lgali/utils/global.color.dart';
+import 'package:lgali/shared/global.color.dart';
 import 'package:line_icons/line_icons.dart';
 
 final countList = List<int>.generate(5, (index) => index);
@@ -44,13 +44,7 @@ class _StepperScreenState extends State<StepperScreen> {
           ),
           content: controller.companyTypeService(),
           isActive: controller.currentStep.value >= 3),
-      Step(
-          title: Text(
-            "App",
-            style: TextStyle(color: GlobalColor.buttonColor),
-          ),
-          content: controller.descriptionApp(),
-          isActive: controller.currentStep.value >= 4),
+
     ];
   }
 
@@ -60,71 +54,80 @@ class _StepperScreenState extends State<StepperScreen> {
         child: Scaffold(
       body: Center(
         child: Obx(() => Stepper(
+          type: StepperType.horizontal,
+          physics : ClampingScrollPhysics(),
               elevation: 0,
               currentStep: controller.currentStep.value,
               steps: buildStep(),
               controlsBuilder:
                   (BuildContext context, ControlsDetails controls) {
                 return Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  child: Column(
+
                     children: [
-                      Container(
-                        child: RawMaterialButton(
-                          splashColor: GlobalColor.white,
-                          onPressed: () {
-                            if (controller.currentStep.value > 0) {
-                              controller.currentStep.value--;
-                            }
-                          },
-                          elevation: 2.0,
-                          fillColor: GlobalColor.buttonColor,
-                          child: Icon(
-                            LineIcons.arrowLeft,
-                            size: 30,
-                            color: GlobalColor.white,
+                   const   SizedBox( height: 200,),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            child: RawMaterialButton(
+                              splashColor: GlobalColor.white,
+                              onPressed: () {
+                                if (controller.currentStep.value > 0) {
+                                  controller.currentStep.value--;
+                                }
+                              },
+                              elevation: 2.0,
+                              fillColor: GlobalColor.buttonColor,
+                              child: Icon(
+                                LineIcons.arrowLeft,
+                                size: 30,
+                                color: GlobalColor.white,
+                              ),
+                              shape: CircleBorder(),
+                            ),
                           ),
-                          shape: CircleBorder(),
-                        ),
-                      ),
-                      Container(
-                        child: RawMaterialButton(
-                          splashColor: GlobalColor.white,
-                          onPressed: () {
-                            if (controller.currentStep.value <
-                                    buildStep().length &&
-                                controller.isCompletedStep() == true) {
-                              controller.currentStep.value++;
-                            } else if (controller.isCompletedStep() == false &&
-                                controller.currentStep.value != 4) {
-                              Get.snackbar(
-                                  "Error", "Invalid form , try again please",
-                                  backgroundColor: Colors.redAccent,
-                                  colorText: Colors.white,
-                                  margin: EdgeInsets.only(
-                                      bottom: 4, left: 4, right: 4),
-                                  snackPosition: SnackPosition.BOTTOM);
-                            } else {
-                              controller.result.isEmpty
-                                  ? Get.snackbar("Cheking",
-                                      "Click in validate button to create your profile",
-                                      backgroundColor: GlobalColor.greenColor,
+                          Container(
+                            child: RawMaterialButton(
+                              splashColor: GlobalColor.white,
+                              onPressed: () {
+                                if (controller.currentStep.value <
+                                        buildStep().length &&
+                                    controller.isCompletedStep() == true) {
+                                  controller.currentStep.value++;
+                                } else if (controller.isCompletedStep() ==
+                                        false &&
+                                    controller.currentStep.value != 4) {
+                                  Get.snackbar(
+                                      "Error", "Invalid form , try again please",
+                                      backgroundColor: Colors.redAccent,
                                       colorText: Colors.white,
                                       margin: EdgeInsets.only(
                                           bottom: 4, left: 4, right: 4),
-                                      snackPosition: SnackPosition.BOTTOM)
-                                  : null;
-                            }
-                          },
-                          elevation: 2.0,
-                          fillColor: GlobalColor.buttonColor,
-                          child: Icon(
-                            LineIcons.arrowRight,
-                            size: 30,
-                            color: GlobalColor.white,
+                                      snackPosition: SnackPosition.BOTTOM);
+                                } else {
+                                  controller.result.isEmpty
+                                      ? Get.snackbar("Checking",
+                                          "Click in validate button to create your profile",
+                                          backgroundColor: GlobalColor.greenColor,
+                                          colorText: Colors.white,
+                                          margin: EdgeInsets.only(
+                                              bottom: 4, left: 4, right: 4),
+                                          snackPosition: SnackPosition.BOTTOM)
+                                      : null;
+                                }
+                              },
+                              elevation: 2.0,
+                              fillColor: GlobalColor.buttonColor,
+                              child: Icon(
+                                LineIcons.arrowRight,
+                                size: 30,
+                                color: GlobalColor.white,
+                              ),
+                              shape: CircleBorder(),
+                            ),
                           ),
-                          shape: CircleBorder(),
-                        ),
+                        ],
                       ),
                     ],
                   ),

@@ -2,11 +2,16 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
+import 'package:lgali/controllers/stepper/user_info.controller.dart';
+import 'package:lgali/screens/stepper/term.view.dart';
+import 'package:lgali/screens/stepper/user_info.view.dart';
 import 'package:selectable_container/selectable_container.dart';
 import 'package:supabase/supabase.dart';
 
 import '../../shared/global.color.dart';
 import '../../shared/loading.dart';
+import '../../shared/theme/app_theme.dart';
 import 'company_info.view.dart';
 
 class UserTypeScreen extends StatefulWidget {
@@ -15,8 +20,17 @@ class UserTypeScreen extends StatefulWidget {
 }
 
 class _UserTypeScreenState extends State<UserTypeScreen> {
+  var box = Hive.box('user');
+
   var professional = false.obs;
   var particular = true.obs;
+
+  void userTypeSelected() {
+    if (professional.isTrue)
+      box.put('type', 'professional');
+    else
+      box.put('type', 'particular');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +46,7 @@ class _UserTypeScreenState extends State<UserTypeScreen> {
           style: TextStyle(
               fontSize: 30,
               fontWeight: FontWeight.w700,
-              color: GlobalColor.buttonColor),
+              color: AppTheme.title2),
         )),
         SizedBox(
           height: 4,
@@ -43,7 +57,10 @@ class _UserTypeScreenState extends State<UserTypeScreen> {
               padding: const EdgeInsets.all(15.0),
               child: Text(
                 'Choose the type of your account, if you have company/profession select professional',
-                style: TextStyle(fontSize: 18, color: GlobalColor.textColor),
+                style: TextStyle(
+                    fontSize: 18,
+                    fontFamily: 'Oxygen',
+                    color: GlobalColor.textColor),
               ),
             )),
         SizedBox(
@@ -79,6 +96,7 @@ class _UserTypeScreenState extends State<UserTypeScreen> {
                     'I am a particular',
                     style: TextStyle(
                         color: GlobalColor.buttonColor,
+                        fontFamily: 'Oxygen',
                         fontSize: 18,
                         fontWeight: FontWeight.w500),
                   ),
@@ -89,6 +107,7 @@ class _UserTypeScreenState extends State<UserTypeScreen> {
                     'Find a service online, access',
                     style: TextStyle(
                         color: GlobalColor.textColor,
+                        fontFamily: 'Oxygen',
                         fontSize: 12,
                         fontWeight: FontWeight.w300),
                   ),
@@ -99,6 +118,7 @@ class _UserTypeScreenState extends State<UserTypeScreen> {
                     ' companies and more',
                     style: TextStyle(
                         color: GlobalColor.textColor,
+                        fontFamily: 'Oxygen',
                         fontSize: 12,
                         fontWeight: FontWeight.w300),
                   ),
@@ -139,6 +159,7 @@ class _UserTypeScreenState extends State<UserTypeScreen> {
                     style: TextStyle(
                         color: GlobalColor.buttonColor,
                         fontSize: 18,
+                        fontFamily: 'Oxygen',
                         fontWeight: FontWeight.w500),
                   ),
                   SizedBox(
@@ -148,6 +169,7 @@ class _UserTypeScreenState extends State<UserTypeScreen> {
                     'The easiest way to raise',
                     style: TextStyle(
                         color: GlobalColor.textColor,
+                        fontFamily: 'Oxygen',
                         fontSize: 12,
                         fontWeight: FontWeight.w300),
                   ),
@@ -158,6 +180,7 @@ class _UserTypeScreenState extends State<UserTypeScreen> {
                     ' your service online',
                     style: TextStyle(
                         color: GlobalColor.textColor,
+                        fontFamily: 'Oxygen',
                         fontSize: 12,
                         fontWeight: FontWeight.w300),
                   ),
@@ -165,18 +188,18 @@ class _UserTypeScreenState extends State<UserTypeScreen> {
               )
             ])),
         SizedBox(
-          height: MediaQuery.of(context).size.height - 545,
+          height: MediaQuery.of(context).size.height - 570,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             ElevatedButton(
               onPressed: () {
-                Get.back();
+                Get.off(()=>UserInfoScreen());
               },
               child: Text('Back'),
               style: ElevatedButton.styleFrom(
-                backgroundColor: GlobalColor.buttonColor,
+                backgroundColor: const Color(0xff136AFB),
                 textStyle:
                     TextStyle(color: GlobalColor.cardColor, fontSize: 17),
                 fixedSize: Size(90, 40),
@@ -191,14 +214,16 @@ class _UserTypeScreenState extends State<UserTypeScreen> {
             ),
             ElevatedButton(
               onPressed: () {
+                userTypeSelected();
                 if (professional.value) {
-                  Get.to(() => CompanyInfoScreen());
-
+                  Get.off(() => CompanyInfoScreen());
+                } else {
+                  Get.off(() => TermsScreen());
                 }
               },
               child: Text('Next'),
               style: ElevatedButton.styleFrom(
-                backgroundColor: GlobalColor.buttonColor,
+                backgroundColor: const Color(0xff136AFB),
                 textStyle:
                     TextStyle(color: GlobalColor.cardColor, fontSize: 17),
                 fixedSize: Size(90, 40),

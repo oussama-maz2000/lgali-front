@@ -6,11 +6,11 @@ import 'package:line_icons/line_icons.dart';
 
 import '../controllers/login.controller.dart';
 
-import '../utils/global.color.dart';
+import '../shared/global.color.dart';
 
 
-class LoginScreen extends GetView<LoginController> {
-  var _loginController = Get.put(LoginController());
+class LoginScreen extends StatelessWidget {
+ // var _loginController = Get.put(LoginController());
 
   @override
   Widget build(BuildContext context) {
@@ -65,15 +65,7 @@ class LoginScreen extends GetView<LoginController> {
                             child: Center(
                               child: Container(
                                 child: TextFormField(
-                                  controller: controller.emailController,
-                                  onChanged: (v) {
-                                    if (v.contains('@') && v.contains('.com')) {
-                                      controller.emailValid.value = true;
-                                    } else if (!v.contains('@') ||
-                                        !v.contains('.com')) {
-                                      controller.emailValid.value = false;
-                                    }
-                                  },
+
                                   style: TextStyle(fontSize: 23),
                                   decoration: InputDecoration(
                                       hintText: 'Email address',
@@ -98,15 +90,8 @@ class LoginScreen extends GetView<LoginController> {
                                 width: MediaQuery.of(context).size.width-60,
                                 height: 45,
                                 child: TextFormField(
-                                  controller: controller.passwordController,
                                   obscureText: true,
-                                  onChanged: (v) {
-                                    if (v.length > 6) {
-                                      controller.passwordValid.value = true;
-                                    } else if (v.length < 6) {
-                                      controller.passwordValid.value = false;
-                                    }
-                                  },
+
                                   style: TextStyle(fontSize: 23),
                                   decoration: InputDecoration(
                                       hintText: 'Password',
@@ -126,7 +111,7 @@ class LoginScreen extends GetView<LoginController> {
                             height: 30,
                           ),
                           InkWell(
-                            onTap: () => {controller.logInWithPassword()},
+                          //  onTap: () => {controller.logInWithPassword()},
                             child: Container(
                               alignment: Alignment.center,
                               height: 50,

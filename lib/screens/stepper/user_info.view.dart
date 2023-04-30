@@ -4,14 +4,16 @@ import 'package:lgali/screens/stepper/user_type.view.dart';
 import 'package:lgali/shared/custom_snack_bar.dart';
 import '../../controllers/stepper/user_info.controller.dart';
 import '../../shared/global.color.dart';
+import '../../shared/theme/app_theme.dart';
 
-class UserInfoScreen extends GetView<UserInfoController> {
+class UserInfoScreen extends StatelessWidget {
+  final controller = Get.put(UserInfoController());
+
   @override
   Widget build(BuildContext context) {
-    Get.lazyPut(() => UserInfoController());
-    final controller = Get.find<UserInfoController>();
     return SafeArea(
         child: Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Center(
         child: Container(
             child: Column(
@@ -25,7 +27,7 @@ class UserInfoScreen extends GetView<UserInfoController> {
                 "User Profil",
                 style: TextStyle(
                   fontSize: 30,
-                  color: GlobalColor.buttonColor,
+                  color: AppTheme.title2,
                   fontWeight: FontWeight.w700,
                 ),
               ),
@@ -35,7 +37,10 @@ class UserInfoScreen extends GetView<UserInfoController> {
               margin: EdgeInsets.only(left: 30, right: 30),
               child: Text(
                 "Please enter your information to validate your profile",
-                style: TextStyle(fontSize: 18, color: GlobalColor.textColor),
+                style: TextStyle(
+                    fontSize: 18,
+                    fontFamily: 'Oxygen',
+                    color: GlobalColor.textColor),
               ),
             ),
             SizedBox(height: 20),
@@ -69,8 +74,8 @@ class UserInfoScreen extends GetView<UserInfoController> {
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10)),
                             hintStyle: TextStyle(
-                                height: 1,
-                                fontSize: 20,
+                                fontFamily: 'Oxygen',
+                                fontSize: 18,
                                 color: GlobalColor.buttonColor),
                           ),
                           keyboardType: TextInputType.name,
@@ -100,8 +105,8 @@ class UserInfoScreen extends GetView<UserInfoController> {
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10)),
                             hintStyle: TextStyle(
-                                height: 1,
-                                fontSize: 20,
+                                fontFamily: 'Oxygen',
+                                fontSize: 18,
                                 color: GlobalColor.buttonColor),
                           ),
                           keyboardType: TextInputType.name,
@@ -137,8 +142,8 @@ class UserInfoScreen extends GetView<UserInfoController> {
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10)),
                             hintStyle: TextStyle(
-                                height: 1,
-                                fontSize: 20,
+                                fontFamily: 'Oxygen',
+                                fontSize: 18,
                                 color: GlobalColor.buttonColor),
                           ),
                           keyboardType: TextInputType.number,
@@ -150,7 +155,7 @@ class UserInfoScreen extends GetView<UserInfoController> {
               ),
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.height - 490,
+              height: MediaQuery.of(context).size.height - 540,
             ),
             Row(
               children: [
@@ -162,7 +167,8 @@ class UserInfoScreen extends GetView<UserInfoController> {
                     if (controller.firstNameValid.value &&
                         controller.lastNameValid.value &&
                         controller.phoneValid.value) {
-                      Get.to(() => UserTypeScreen());
+                      controller.setDataHive();
+                      Get.off(() => UserTypeScreen());
                     } else {
                       CustomSnackBar(
                           "Error",
@@ -172,7 +178,7 @@ class UserInfoScreen extends GetView<UserInfoController> {
                   },
                   child: Text('Next'),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: GlobalColor.buttonColor,
+                    backgroundColor: Color(0xff136AFB),
                     textStyle:
                         TextStyle(color: GlobalColor.cardColor, fontSize: 17),
                     fixedSize: Size(90, 40),
