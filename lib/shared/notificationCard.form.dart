@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lgali/shared/custom_snack_bar.dart';
 import 'package:lgali/shared/global.color.dart';
-import 'package:logging/logging.dart';
 
 import '../screens/display_request_companies.view.dart';
 
@@ -10,8 +9,9 @@ class CardNotification extends StatelessWidget {
   Map element;
   late String img;
   CardNotification(this.element) {
+    /*  print('from card notification');
+    print(element); */
     img = element['serviceType'];
-    print(element['serviceType']);
   }
 
   @override
@@ -21,8 +21,11 @@ class CardNotification extends StatelessWidget {
       child: InkWell(
         onTap: () {
           if (element['cluster'] > -1) {
-            Get.to(() => DisplayCompaniesRequestScreen(),
-                arguments: [element['cluster'], element['serviceType']]);
+            Get.to(() => DisplayCompaniesRequestScreen(), arguments: [
+              element['id'],
+              element['cluster'],
+              element['serviceType']
+            ]);
           } else {
             CustomSnackBar(
                 "Research",
