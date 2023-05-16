@@ -17,19 +17,25 @@ class DashBordController extends GetxController {
   var box = Hive.box('user');
   CompanyRepository companyRepository = Get.put(CompanyRepository());
 
-  var tabIndex = 0.obs;
+  static RxInt tabIndex = 0.obs;
   var widgetsList = <Widget>[].obs;
   var iconList = <BottomNavigationBarItem>[].obs;
 
   @override
   void onInit() async {
     super.onInit();
+    /*  print(box.get('id'));
+    print(box.get('email'));
+    print(box.get('session'));
+    print(box.get('isAuth'));
+    print(box.get('type')); */
+    print('dashbord controller called');
     bottomBar();
     companyRepository.listenToChanges();
   }
 
   void bottomBar() {
-    if ('professional' == 'professional') {
+    if ("professional" == 'professional') {
       widgetsList.value = [
         HomeScreen(),
         AcceptScreen(),
@@ -100,5 +106,9 @@ class DashBordController extends GetxController {
       ),
       label: label,
     );
+  }
+
+  void changeIndex() {
+    tabIndex.value = 3;
   }
 }
