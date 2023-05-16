@@ -11,7 +11,8 @@ class DisplayCompanyInfoController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    values.value = await _companyRepository.getCompany(data);
+    values.value = await _companyRepository.getCompany(data[0]);
+
     type.value = values.value[2];
   }
 
@@ -19,5 +20,9 @@ class DisplayCompanyInfoController extends GetxController {
   void onClose() {
     super.onClose();
     _companyRepository.dispose();
+  }
+
+  void printRequestId() {
+    CompanyRepository.putRequestINCompany(data[0], data[1]);
   }
 }
