@@ -33,7 +33,7 @@ class HomeController extends GetxController {
 
   void listenToChanges() {
     final subscription = supabase
-        .from('userPlace')
+        .from('positions')
         .stream(primaryKey: ['user_id'])
         .eq("user_id", "48b1256c-0da0-4e34-a09c-d1dd5ae93fe0")
         .listen((List<Map<String, dynamic>> event) async {

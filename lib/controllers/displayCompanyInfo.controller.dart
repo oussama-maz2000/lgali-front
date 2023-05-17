@@ -23,6 +23,6 @@ class DisplayCompanyInfoController extends GetxController {
   }
 
   void printRequestId() {
-    CompanyRepository.putRequestINCompany(data[0], data[1]);
+    CompanyRepository.putRequestInCompany(data[0], data[1]);
   }
 }
