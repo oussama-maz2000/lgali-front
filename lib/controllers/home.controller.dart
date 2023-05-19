@@ -1,41 +1,44 @@
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 import 'package:lgali/model/repository/profileRepository.dart';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class HomeController extends GetxController {
   // final ProfileRepository _profileRepository = Get.put(ProfileRepository());
-  var repository = Get.lazyPut(() => ProfileRepository());
-  var _profileRepository = Get.find<ProfileRepository>();
 
-  final myList = Rx([]);
+  var box = Hive.box('user');
+
+  var myList = Rx([]);
   final supabase = Supabase.instance.client;
-  var latitude = 0.0.obs;
-  var longitude = 0.0.obs;
+
   var checkGPS = false.obs;
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit;
     listenToChanges();
+  }
 
-    //await activeGPS();
+  @override
+  void onReady() {
+    super.onReady();
+    getCurrentPosition();
   }
 
   void updateLocation() async {
     Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
-    latitude.value = position.latitude;
-    longitude.value = position.longitude;
-    _profileRepository.updateLocation(latitude.value, longitude.value);
+    ProfileRepository.updateLocation(
+        box.get('id'), position.altitude, position.longitude);
   }
 
   void listenToChanges() {
     final subscription = supabase
         .from('positions')
         .stream(primaryKey: ['user_id'])
-        .eq("user_id", "48b1256c-0da0-4e34-a09c-d1dd5ae93fe0")
+        .eq("user_id", box.get('id'))
         .listen((List<Map<String, dynamic>> event) async {
           final cluster = event[0].remove('cluster');
 
@@ -52,7 +55,6 @@ class HomeController extends GetxController {
     bool serviceStatus;
     LocationPermission permission;
     serviceStatus = await Geolocator.isLocationServiceEnabled();
-
     if (serviceStatus) {
       permission = await Geolocator.checkPermission();
       if (permission == LocationPermission.denied) {
@@ -68,7 +70,12 @@ class HomeController extends GetxController {
         print('status actives well');
       }
     }
-
     return await Geolocator.getCurrentPosition();
+  }
+
+  void getCurrentPosition() async {
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    print(position);
   }
 }
