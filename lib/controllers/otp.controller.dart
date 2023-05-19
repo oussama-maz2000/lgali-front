@@ -13,22 +13,23 @@ import '../shared/global.color.dart';
 
 class OtpController extends GetxController {
   // ----------SupaBase----------//
-  var userEmail = Get.arguments;
+  var userEmail = Get.arguments[0];
   final supabase = Supabase.instance.client;
+  late TextEditingController otpCode;
+
   // ----------Dependency Injection----------//
 
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    print(userEmail);
+    otpCode = TextEditingController();
   }
 
   final signController = Get.put(SignController());
   var box = Hive.box('user');
 
   // ----------Variables----------//
-  TextEditingController otpCode = TextEditingController();
   bool isAuthenticated = false;
   String? session;
   User? user;
@@ -36,12 +37,11 @@ class OtpController extends GetxController {
   Future<void> verification() async {
     try {
       final AuthResponse response = await supabase.auth.verifyOTP(
-          token: otpCode.value.text, type: OtpType.signup, email: userEmail);
+          type: OtpType.signup, token: otpCode.value.text, email: userEmail!);
       session = supabase.auth.currentSession?.accessToken;
       user = response.user;
       session == null ? isAuthenticated = false : isAuthenticated = true;
 
-      print('_______Data User_______');
       box.putAll({
         'id': user?.id,
         'email': user?.email,
@@ -49,15 +49,9 @@ class OtpController extends GetxController {
         'isAuth': isAuthenticated
       });
 
-      Get.off(() => UserInfoScreen());
-    } catch (err) {
-      print(err);
-      CustomSnackBar(
-          'Error', 'Token has expired or is invalid', GlobalColor.redColor);
+      Get.to(() => UserInfoScreen());
+    } catch (e) {
+      CustomSnackBar("Error", "try again please", GlobalColor.redColor);
     }
-  }
-
-  void printOtp() {
-    print(otpCode.value.text);
   }
 }
