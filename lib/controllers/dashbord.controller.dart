@@ -15,6 +15,7 @@ import '../shared/tabBarTest.dart';
 
 class DashBordController extends GetxController {
   var box = Hive.box('user');
+
   CompanyRepository companyRepository = Get.put(CompanyRepository());
 
   static RxInt tabIndex = 0.obs;
@@ -24,18 +25,13 @@ class DashBordController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    /*  print(box.get('id'));
-    print(box.get('email'));
-    print(box.get('session'));
-    print(box.get('isAuth'));
-    print(box.get('type')); */
-    print('dashbord controller called');
+    ProfileRepository.checkExistUserInPositionTable(box.get('id'));
     bottomBar();
-    companyRepository.listenToChanges();
+    if (box.get('type') == 'professional') companyRepository.listenToChanges();
   }
 
   void bottomBar() {
-    if ("professional" == 'professional') {
+    if (box.get('type') == 'professional') {
       widgetsList.value = [
         HomeScreen(),
         AcceptScreen(),
