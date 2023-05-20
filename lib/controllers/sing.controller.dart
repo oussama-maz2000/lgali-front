@@ -29,14 +29,14 @@ class SignController extends GetxController {
             password: passwordController.value.text,
             email: emailController.value.text);
         CustomSnackBar(
-            'Register', 'you will get opt code', GlobalColor.greenColor);
+            'Register', 'you will get opt code', GlobalColor.redColor);
         Get.to(() => OtpTest(), arguments: [emailController.value.text]);
       } else if (!emailValid.value || !passwordValid.value)
-        CustomSnackBar(
-            'Error', 'invalid email or password', GlobalColor.redColor);
+        CustomSnackBar('Error', 'invalid email or password',
+            Color.fromARGB(255, 206, 76, 76));
     } catch (e) {
-      CustomSnackBar(
-          'Error', 'you have registered before', GlobalColor.redColor);
+      CustomSnackBar('Error', 'you have registered before',
+          Color.fromARGB(255, 206, 76, 76));
     }
   }
 }
