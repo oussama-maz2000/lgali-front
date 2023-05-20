@@ -31,7 +31,7 @@ class HomeController extends GetxController {
     Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
     ProfileRepository.updateLocation(
-        box.get('id'), position.altitude, position.longitude);
+        box.get('id'), position.latitude, position.longitude);
   }
 
   void listenToChanges() {
